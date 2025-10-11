@@ -1,0 +1,2 @@
+-- 为采购订单表添加状态字段
+ALTER TABLE purchase_orders ADD COLUMN status ENUM('PENDING', 'CONFIRMED', 'RECEIVED', 'CANCELLED') NOT NULL DEFAULT 'PENDING' AFTER total_amount;
