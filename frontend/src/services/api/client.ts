@@ -373,7 +373,7 @@ class ApiClient {
   // 认证相关API
   async login(credentials: { username: string; password: string }): Promise<{ token: string; user: any }> {
     // 后端返回的数据包装在ApiResponse中
-    const response = await this.client.post<ApiResponse<{ accessToken: string; tokenType: string; user: any }>>('/api/v1/Auth/Login', credentials);
+    const response = await this.client.post<ApiResponse<{ accessToken: string; tokenType: string; user: any }>>('/api/v1/auth/login', credentials);
     
     // 检查响应数据是否存在
     if (!response.data.data) {
@@ -388,11 +388,11 @@ class ApiClient {
   }
 
   async register(userData: { username: string; email: string; password: string }): Promise<void> {
-    await this.client.post('/api/v1/Auth/Register', userData);
+    await this.client.post('/api/v1/auth/register', userData);
   }
 
   async getCurrentUser(): Promise<any> {
-    const response = await this.client.get<ApiResponse<any>>('/api/v1/Auth/Me');
+    const response = await this.client.get<ApiResponse<any>>('/api/v1/auth/me');
     return response.data.data;
   }
 

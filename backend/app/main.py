@@ -65,7 +65,10 @@ app.add_middleware(
 app.add_middleware(OperationLogMiddleware)
 
 # 挂载静态文件
-app.mount("/static", StaticFiles(directory="static"), name="static")
+import os
+static_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "static")
+if os.path.exists(static_dir):
+    app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 # 注册路由
 app.include_router(auth.router, prefix="/api/v1", tags=["认证"])
