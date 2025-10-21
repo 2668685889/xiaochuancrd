@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from typing import List, Optional
 from uuid import UUID
 import logging
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.schemas.coze import (
     CozeUploadRequest,
@@ -18,7 +19,7 @@ from app.schemas.coze import (
 )
 from app.services.coze_service import CozeService
 from app.services.operation_log_service import OperationLogService
-from app.core.database import get_db
+from app.core.database import get_async_db
 from app.utils.mapper import snake_to_camel, camel_to_snake  # 添加命名转换工具导入
 
 router = APIRouter()
@@ -26,7 +27,7 @@ logger = logging.getLogger(__name__)
 
 
 @router.get("/coze/tables", response_model=List[CozeTableInfo])
-async def get_available_tables(db = Depends(get_db)):
+async def get_available_tables(db: AsyncSession = Depends(get_async_db)):
     """获取可上传的数据表列表"""
     try:
         tables = await CozeService.get_available_tables(db)
@@ -38,7 +39,7 @@ async def get_available_tables(db = Depends(get_db)):
 
 
 @router.get("/coze/tables/{table_name}/fields")
-async def get_table_fields(table_name: str, db = Depends(get_db)):
+async def get_table_fields(table_name: str, db: AsyncSession = Depends(get_async_db)):
     """获取数据表的字段信息"""
     try:
         fields = await CozeService.get_table_fields(table_name, db)
@@ -51,7 +52,7 @@ async def get_table_fields(table_name: str, db = Depends(get_db)):
 @router.post("/coze/sync-config", response_model=dict)
 async def create_sync_config(
     request: CozeUploadRequest,
-    db = Depends(get_db)
+    db: AsyncSession = Depends(get_async_db)
 ):
     """创建实时同步配置"""
     try:
@@ -106,7 +107,7 @@ async def create_sync_config(
         raise HTTPException(status_code=500, detail="创建实时同步配置失败")
 
 @router.get("/coze/sync-configs", response_model=CozeSyncConfigListResponse)
-async def get_sync_configs(db = Depends(get_db)):
+async def get_sync_configs(db: AsyncSession = Depends(get_async_db)):
     """获取所有同步配置"""
     try:
         configs = await CozeService.get_sync_configs(db)
@@ -127,7 +128,7 @@ async def get_sync_configs(db = Depends(get_db)):
 async def update_sync_config(
     config_id: str,
     updates: dict,
-    db = Depends(get_db)
+    db: AsyncSession = Depends(get_async_db)
 ):
     """更新同步配置"""
     try:
@@ -146,7 +147,7 @@ async def update_sync_config(
 @router.delete("/coze/sync-config/{config_id}")
 async def delete_sync_config(
     config_id: str,
-    db = Depends(get_db)
+    db: AsyncSession = Depends(get_async_db)
 ):
     """删除同步配置"""
     try:
@@ -214,7 +215,7 @@ async def get_table_data(
     table_name: str,
     limit: int = 10,
     offset: int = 0,
-    db = Depends(get_db)
+    db = Depends(get_async_db)
 ):
     """获取指定表的真实数据"""
     try:
@@ -232,7 +233,7 @@ async def get_table_data(
 async def get_table_sample_data(
     table_name: str,
     sample_size: int = 5,
-    db = Depends(get_db)
+    db = Depends(get_async_db)
 ):
     """获取表的样本数据（用于测试和预览）"""
     try:
@@ -291,7 +292,7 @@ async def cancel_upload(
 @router.post("/coze/sync-config/{config_uuid}/manual-sync")
 async def trigger_manual_sync(
     config_uuid: UUID,
-    db = Depends(get_db)
+    db = Depends(get_async_db)
 ):
     """手动触发同步配置的数据同步"""
     try:

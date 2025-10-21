@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, or_
 from typing import Optional
 
-from app.core.database import get_db
+from app.core.database import get_async_db
 from app.models.product_model import ProductModel
 from app.schemas.product_model import (
     ProductModelResponse, 
@@ -27,7 +27,7 @@ async def get_product_models(
     size: int = Query(20, ge=1, le=100, description="每页大小"),
     search: Optional[str] = Query(None, description="搜索关键词"),
     category_uuid: Optional[str] = Query(None, description="产品分类UUID"),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_async_db)
 ):
     """获取产品型号列表"""
     # 构建查询条件
@@ -119,7 +119,7 @@ async def get_product_models(
 
 
 @router.get("/ProductModels/{model_uuid}", response_model=ApiResponse[ProductModelResponse])
-async def get_product_model(model_uuid: str, db: AsyncSession = Depends(get_db)):
+async def get_product_model(model_uuid: str, db: AsyncSession = Depends(get_async_db)):
     """获取单个产品型号"""
     result = await db.execute(
         select(ProductModel).where(ProductModel.uuid == model_uuid, ProductModel.is_active == True)
@@ -186,7 +186,7 @@ async def get_product_model(model_uuid: str, db: AsyncSession = Depends(get_db))
 
 
 @router.post("/ProductModels", response_model=ApiResponse[ProductModelResponse])
-async def create_product_model(model_data: ProductModelCreate, db: AsyncSession = Depends(get_db)):
+async def create_product_model(model_data: ProductModelCreate, db: AsyncSession = Depends(get_async_db)):
     """创建新产品型号"""
     # 导入编码生成工具
     from app.utils.code_generator import generate_unique_product_model_code
@@ -295,7 +295,7 @@ async def create_product_model(model_data: ProductModelCreate, db: AsyncSession 
 async def update_product_model(
     model_uuid: str, 
     model_data: ProductModelUpdate, 
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_async_db)
 ):
     """更新产品型号信息"""
     result = await db.execute(select(ProductModel).where(ProductModel.uuid == model_uuid))
@@ -406,7 +406,7 @@ async def update_product_model(
 
 
 @router.delete("/ProductModels/{model_uuid}")
-async def delete_product_model(model_uuid: str, db: AsyncSession = Depends(get_db)):
+async def delete_product_model(model_uuid: str, db: AsyncSession = Depends(get_async_db)):
     """删除产品型号（软删除）"""
     result = await db.execute(select(ProductModel).where(ProductModel.uuid == model_uuid))
     product_model = result.scalar_one_or_none()
@@ -441,7 +441,7 @@ async def delete_product_model(model_uuid: str, db: AsyncSession = Depends(get_d
 
 
 @router.get("/ProductModels/categories")
-async def get_model_categories(db: AsyncSession = Depends(get_db)):
+async def get_model_categories(db: AsyncSession = Depends(get_async_db)):
     """获取所有产品分类"""
     result = await db.execute(
         select(ProductModel.category).where(ProductModel.is_active == True).distinct()

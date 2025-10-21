@@ -9,7 +9,7 @@ from sqlalchemy import or_, func, delete
 from datetime import datetime
 from uuid import uuid4
 
-from app.core.database import get_db
+from app.core.database import get_async_db
 from app.models.sales_order import SalesOrder, SalesOrderItem
 from app.models.customer import Customer
 from app.models.product import Product
@@ -31,7 +31,7 @@ def generate_order_number():
 
 @router.get("/SalesOrders", response_model=ApiResponse[PaginatedResponse[SalesOrderResponse]])
 async def get_sales_orders(
-    db: AsyncSession = Depends(get_db),
+    db: AsyncSession = Depends(get_async_db),
     page: int = Query(1, ge=1, description="页码"),
     size: int = Query(20, ge=1, le=100, description="每页大小"),
     search: str = Query(None, description="搜索关键词"),
@@ -112,7 +112,7 @@ async def get_sales_orders(
 
 
 @router.get("/SalesOrders/{order_uuid}", response_model=ApiResponse[SalesOrderResponse])
-async def get_sales_order(order_uuid: str, db: AsyncSession = Depends(get_db)):
+async def get_sales_order(order_uuid: str, db: AsyncSession = Depends(get_async_db)):
     """获取单个销售订单"""
     result = await db.execute(
         select(SalesOrder).where(SalesOrder.uuid == order_uuid)
@@ -169,7 +169,7 @@ async def get_sales_order(order_uuid: str, db: AsyncSession = Depends(get_db)):
 
 
 @router.post("/SalesOrders", response_model=ApiResponse[SalesOrderResponse])
-async def create_sales_order(order_data: SalesOrderCreate, db: AsyncSession = Depends(get_db)):
+async def create_sales_order(order_data: SalesOrderCreate, db: AsyncSession = Depends(get_async_db)):
     """创建销售订单"""
     # 将UUID对象转换为字符串格式进行查询
     customer_uuid_str = str(order_data.customerUuid)
@@ -284,7 +284,7 @@ async def create_sales_order(order_data: SalesOrderCreate, db: AsyncSession = De
 async def update_sales_order(
     order_uuid: str, 
     order_data: SalesOrderUpdate, 
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_async_db)
 ):
     """更新销售订单信息"""
     result = await db.execute(select(SalesOrder).where(SalesOrder.uuid == order_uuid))
@@ -341,7 +341,7 @@ async def update_sales_order(
 
 
 @router.delete("/SalesOrders/{order_uuid}", response_model=ApiResponse[dict])
-async def delete_sales_order(order_uuid: str, db: AsyncSession = Depends(get_db)):
+async def delete_sales_order(order_uuid: str, db: AsyncSession = Depends(get_async_db)):
     """删除销售订单（硬删除）"""
     result = await db.execute(select(SalesOrder).where(SalesOrder.uuid == order_uuid))
     order = result.scalar_one_or_none()

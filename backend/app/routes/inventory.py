@@ -10,7 +10,7 @@ from sqlalchemy.orm import selectinload
 from datetime import datetime, date
 from typing import Optional
 
-from app.core.database import get_db
+from app.core.database import get_async_db
 from app.models.inventory import InventoryRecord
 from app.models.product import Product
 from app.schemas.inventory import (
@@ -27,7 +27,7 @@ router = APIRouter()
 
 
 @router.get("/Inventory/Summary", response_model=ApiResponse[InventorySummary])
-async def get_inventory_summary(db: AsyncSession = Depends(get_db)):
+async def get_inventory_summary(db: AsyncSession = Depends(get_async_db)):
     """获取库存汇总信息"""
     # 获取总产品数
     result = await db.execute(select(Product).where(Product.is_active == True))
@@ -93,7 +93,7 @@ async def get_inventory_summary(db: AsyncSession = Depends(get_db)):
 
 
 @router.get("/Inventory/Alerts", response_model=ApiResponse[dict])
-async def get_inventory_alerts(db: AsyncSession = Depends(get_db)):
+async def get_inventory_alerts(db: AsyncSession = Depends(get_async_db)):
     """获取库存预警列表"""
     result = await db.execute(select(Product).where(Product.is_active == True))
     products = result.scalars().all()
@@ -129,7 +129,7 @@ async def get_inventory_alerts(db: AsyncSession = Depends(get_db)):
 
 @router.get("/Inventory", response_model=ApiPaginatedResponse[InventoryRecordResponse])
 async def get_inventory_records(
-    db: AsyncSession = Depends(get_db),
+    db: AsyncSession = Depends(get_async_db),
     page: int = Query(1, ge=1, description="页码"),
     size: int = Query(20, ge=1, le=100, description="每页大小"),
     product_uuid: Optional[str] = Query(None, description="产品UUID"),
@@ -223,7 +223,7 @@ async def get_inventory_records(
 
 
 @router.get("/Inventory/{record_uuid}", response_model=ApiResponse[InventoryRecordResponse])
-async def get_inventory_record(record_uuid: str, db: AsyncSession = Depends(get_db)):
+async def get_inventory_record(record_uuid: str, db: AsyncSession = Depends(get_async_db)):
     """获取单个库存记录"""
     result = await db.execute(
         select(InventoryRecord).options(selectinload(InventoryRecord.product)).join(Product).where(InventoryRecord.uuid == record_uuid)
@@ -270,7 +270,7 @@ async def get_inventory_record(record_uuid: str, db: AsyncSession = Depends(get_
 @router.post("/Inventory", response_model=ApiResponse[InventoryRecordResponse])
 async def create_inventory_record(
     record_data: InventoryRecordCreate, 
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_async_db)
 ):
     """创建库存记录"""
     # 检查产品是否存在
@@ -343,7 +343,7 @@ async def create_inventory_record(
 
 
 @router.get("/Inventory/Summary", response_model=ApiResponse[InventorySummary])
-async def get_inventory_summary(db: AsyncSession = Depends(get_db)):
+async def get_inventory_summary(db: AsyncSession = Depends(get_async_db)):
     """获取库存汇总信息"""
     # 获取总产品数
     result = await db.execute(select(Product).where(Product.is_active == True))
@@ -409,7 +409,7 @@ async def get_inventory_summary(db: AsyncSession = Depends(get_db)):
 
 
 @router.get("/Inventory/Alerts", response_model=ApiResponse[dict])
-async def get_inventory_alerts(db: AsyncSession = Depends(get_db)):
+async def get_inventory_alerts(db: AsyncSession = Depends(get_async_db)):
     """获取库存预警列表"""
     result = await db.execute(select(Product).where(Product.is_active == True))
     products = result.scalars().all()

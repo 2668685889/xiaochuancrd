@@ -13,6 +13,16 @@ class ApiResponse(BaseModel, Generic[T]):
     success: bool = Field(..., description="请求是否成功")
     data: Optional[T] = Field(None, description="响应数据")
     message: Optional[str] = Field(None, description="响应消息")
+    
+    @classmethod
+    def success(cls, data: Optional[T] = None, message: str = "操作成功") -> "ApiResponse[T]":
+        """创建成功响应"""
+        return cls(success=True, data=data, message=message)
+    
+    @classmethod
+    def error(cls, message: str = "操作失败", data: Optional[T] = None) -> "ApiResponse[T]":
+        """创建错误响应"""
+        return cls(success=False, data=data, message=message)
 
 
 class ErrorResponse(BaseModel):

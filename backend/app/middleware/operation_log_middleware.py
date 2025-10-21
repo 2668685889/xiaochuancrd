@@ -12,7 +12,7 @@ import json
 import uuid
 from datetime import datetime
 
-from app.core.database import AsyncSessionLocal
+from app.core.database import SessionLocal
 from app.services.operation_log_service import OperationLogService
 from app.schemas.operation_log import OperationLogCreate
 
@@ -210,8 +210,14 @@ class OperationLogMiddleware(BaseHTTPMiddleware):
             )
             
             # 异步记录日志（不阻塞主流程）
-            async with AsyncSessionLocal() as session:
-                await OperationLogService.create_log(session, log_data)
+            from app.core.database import AsyncSessionLocal
+            async with AsyncSessionLocal() as db:
+                try:
+                    # 使用异步方式记录日志
+                    await OperationLogService.create_log(db, log_data)
+                except Exception as e:
+                    # 记录日志失败不应该影响主业务流程
+                    print(f"记录操作日志失败: {str(e)}")
                 
         except Exception as e:
             # 记录日志失败不应该影响主业务流程

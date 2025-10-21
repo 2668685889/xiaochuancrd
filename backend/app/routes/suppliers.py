@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, or_
 from typing import Optional
 
-from app.core.database import get_db
+from app.core.database import get_async_db
 from app.models.supplier import Supplier
 from app.schemas.supplier import (
     SupplierResponse, 
@@ -26,7 +26,7 @@ async def get_suppliers(
     page: int = Query(1, ge=1, description="页码"),
     size: int = Query(20, ge=1, le=100, description="每页大小"),
     search: Optional[str] = Query(None, description="搜索关键词"),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_async_db)
 ):
     """获取供应商列表"""
     # 构建查询条件
@@ -72,7 +72,7 @@ async def get_suppliers(
 
 
 @router.get("/Suppliers/{supplier_uuid}", response_model=ApiResponse[SupplierResponse])
-async def get_supplier(supplier_uuid: str, db: AsyncSession = Depends(get_db)):
+async def get_supplier(supplier_uuid: str, db: AsyncSession = Depends(get_async_db)):
     """获取单个供应商"""
     result = await db.execute(
         select(Supplier).where(Supplier.uuid == supplier_uuid, Supplier.is_active == True)
@@ -97,7 +97,7 @@ async def get_supplier(supplier_uuid: str, db: AsyncSession = Depends(get_db)):
 
 
 @router.post("/Suppliers", response_model=ApiResponse[SupplierResponse])
-async def create_supplier(supplier_data: SupplierCreate, db: AsyncSession = Depends(get_db)):
+async def create_supplier(supplier_data: SupplierCreate, db: AsyncSession = Depends(get_async_db)):
     """创建新供应商"""
     # 导入编码生成工具
     from app.utils.code_generator import generate_unique_supplier_code
@@ -143,7 +143,7 @@ async def create_supplier(supplier_data: SupplierCreate, db: AsyncSession = Depe
 async def update_supplier(
     supplier_uuid: str, 
     supplier_data: SupplierUpdate, 
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_async_db)
 ):
     """更新供应商信息"""
     result = await db.execute(select(Supplier).where(Supplier.uuid == supplier_uuid))
@@ -216,7 +216,7 @@ async def update_supplier(
 
 
 @router.delete("/Suppliers/{supplier_uuid}", response_model=ApiResponse[dict])
-async def delete_supplier(supplier_uuid: str, db: AsyncSession = Depends(get_db)):
+async def delete_supplier(supplier_uuid: str, db: AsyncSession = Depends(get_async_db)):
     """删除供应商（软删除）"""
     result = await db.execute(select(Supplier).where(Supplier.uuid == supplier_uuid))
     supplier = result.scalar_one_or_none()

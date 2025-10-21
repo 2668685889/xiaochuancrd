@@ -23,6 +23,7 @@ import UserPage from './pages/UserPage';
 import OperationLogsPage from './pages/operation-logs/OperationLogsPage';
 import CozeUploadPage from './pages/coze/CozeUploadPage';
 import AuthDebugPage from './pages/AuthDebugPage';
+import SmartAssistantPage from './pages/SmartAssistantPage';
 
 // 路由保护组件
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -113,6 +114,7 @@ const App: React.FC = () => {
             <Route path="operation-logs" element={<OperationLogsPage />} />
             <Route path="coze" element={<CozeUploadPage />} />
             <Route path="reports" element={<ReportPage />} />
+            <Route path="smart-assistant" element={<SmartAssistantPage />} />
             <Route path="settings" element={<SettingsPage />} />
             <Route path="users" element={<UserPage />} />
             <Route path="auth-debug" element={<AuthDebugPage />} />

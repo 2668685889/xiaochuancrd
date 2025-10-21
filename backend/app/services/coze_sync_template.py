@@ -86,7 +86,8 @@ class CozeSyncTemplate:
             )
             
             # 保存到数据库
-            async for session in get_db():
+            from app.core.database import AsyncSessionLocal
+            async with AsyncSessionLocal() as session:
                 session.add(sync_config)
                 await session.commit()
                 await session.refresh(sync_config)
@@ -136,7 +137,8 @@ class CozeSyncTemplate:
         try:
             # 获取同步配置
             sync_config = None
-            async for session in get_db():
+            from app.core.database import AsyncSessionLocal
+            async with AsyncSessionLocal() as session:
                 db_config = await session.get(CozeSyncConfig, config_uuid)
                 if db_config:
                     sync_config = {
@@ -208,7 +210,8 @@ class CozeSyncTemplate:
                 await asyncio.sleep(0.5)
             
             # 更新最后同步时间
-            async for session in get_db():
+            from app.core.database import AsyncSessionLocal
+            async with AsyncSessionLocal() as session:
                 db_config = await session.get(CozeSyncConfig, config_uuid)
                 if db_config:
                     db_config.last_sync_time = datetime.now()
@@ -225,7 +228,8 @@ class CozeSyncTemplate:
             logger.error(f"手动同步失败: {str(e)}")
             
             # 更新错误信息
-            async for session in get_db():
+            from app.core.database import AsyncSessionLocal
+            async with AsyncSessionLocal() as session:
                 db_config = await session.get(CozeSyncConfig, config_uuid)
                 if db_config:
                     db_config.last_error = str(e)
@@ -243,7 +247,8 @@ class CozeSyncTemplate:
         """获取所有同步模板"""
         try:
             templates = []
-            async for session in get_db():
+            from app.core.database import AsyncSessionLocal
+            async with AsyncSessionLocal() as session:
                 from sqlalchemy import text
                 configs = await session.execute(
                     text("SELECT * FROM coze_sync_configs WHERE enabled = TRUE")
@@ -279,7 +284,8 @@ class CozeSyncTemplate:
     ) -> Dict[str, Any]:
         """更新同步模板"""
         try:
-            async for session in get_db():
+            from app.core.database import AsyncSessionLocal
+            async with AsyncSessionLocal() as session:
                 config = await session.get(CozeSyncConfig, config_uuid)
                 if not config:
                     raise ValueError(f"同步配置不存在: {config_uuid}")
@@ -319,7 +325,8 @@ class CozeSyncTemplate:
     async def delete_sync_template(cls, config_uuid: UUID) -> Dict[str, Any]:
         """删除同步模板"""
         try:
-            async for session in get_db():
+            from app.core.database import AsyncSessionLocal
+            async with AsyncSessionLocal() as session:
                 config = await session.get(CozeSyncConfig, config_uuid)
                 if config:
                     await session.delete(config)

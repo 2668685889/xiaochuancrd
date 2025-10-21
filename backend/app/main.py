@@ -2,6 +2,7 @@
 进销存管理系统 - 后端主应用
 """
 
+import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -9,37 +10,56 @@ from contextlib import asynccontextmanager
 
 from app.core.config import settings
 from app.core.database import engine, Base
-from app.routes import auth, products, suppliers, inventory, purchase_orders, sales_orders, customers, dashboard, product_models, product_categories, operation_logs, coze, coze_sync_template_routes
+from app.routes import auth, products, suppliers, inventory, purchase_orders, sales_orders, customers, dashboard, product_models, product_categories, operation_logs, coze, coze_sync_template_routes, smart_assistant
+
 from app.middleware.operation_log_middleware import OperationLogMiddleware
+
+# 配置日志
+logging.basicConfig(
+    level=getattr(logging, settings.LOG_LEVEL.upper()),
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler('app.log')
+    ]
+)
 
 # 导入所有模型以确保SQLAlchemy正确映射
 from app.models import Product, Supplier, InventoryRecord, PurchaseOrder, SalesOrder, Customer, User, ProductModel, ProductCategory, OperationLog
+from app.models.smart_assistant import AssistantModel, ChatSessionModel, ChatMessageModel, DataSourceModel, QueryHistoryModel, FileUploadModel, WorkspaceModel
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """应用生命周期管理"""
     # 启动时创建数据库表
-    async with engine.begin() as conn:
+    from app.core.database import async_engine
+    
+    # 使用异步引擎创建数据库表
+    async with async_engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
     
     # 创建默认管理员用户
     from app.core.database import AsyncSessionLocal
     from app.routes.auth import create_default_admin
     
-    async with AsyncSessionLocal() as session:
-        await create_default_admin(session)
+    async with AsyncSessionLocal() as db:
+        try:
+            # 使用异步方式创建默认管理员
+            await create_default_admin(db)
+        except Exception as e:
+            print(f"创建默认管理员失败: {str(e)}")
     
-    # 启动CDC服务
-    from app.services.cdc_service import start_cdc_service
-    cdc_task = await start_cdc_service()
+    # 启动CDC服务（暂时禁用）
+    # from app.services.cdc_service import start_cdc_service
+    # cdc_task = await start_cdc_service()
     
     yield
     
     # 关闭时清理资源
-    if cdc_task:
-        cdc_task.cancel()
-    await engine.dispose()
+    # if cdc_task:
+    #     cdc_task.cancel()
+    await async_engine.dispose()
 
 
 # 创建FastAPI应用实例
@@ -84,6 +104,8 @@ app.include_router(product_categories.router, prefix="/api/v1", tags=["产品分
 app.include_router(operation_logs.router, prefix="/api/v1", tags=["操作日志管理"])
 app.include_router(coze.router, prefix="/api/v1", tags=["Coze数据上传"])
 app.include_router(coze_sync_template_routes.router, prefix="/api/v1", tags=["Coze同步模板"])
+app.include_router(smart_assistant.router, prefix="/api/v1", tags=["智能助手"])
+
 
 
 @app.get("/")

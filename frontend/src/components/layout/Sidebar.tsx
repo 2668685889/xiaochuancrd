@@ -14,7 +14,8 @@ import {
   Cpu,
   FileText,
   User,
-  UploadCloud
+  UploadCloud,
+  Bot
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -34,6 +35,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed = false, onToggle }) => {
     { path: '/sales-orders', label: '销售管理', icon: ShoppingCart, color: 'text-red-600' },
     { path: '/purchase-orders', label: '采购管理', icon: BarChart3, color: 'text-cyan-600' },
     { path: '/reports', label: '报表分析', icon: BarChart3, color: 'text-gray-600' },
+    { path: '/smart-assistant', label: '智能助手', icon: Bot, color: 'text-violet-600' },
     { path: '/users', label: '用户管理', icon: Users, color: 'text-pink-600' },
     { path: '/operation-logs', label: '操作日志', icon: FileText, color: 'text-amber-600' },
     { path: '/coze', label: 'Coze', icon: UploadCloud, color: 'text-indigo-600' },
@@ -70,41 +72,50 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed = false, onToggle }) => {
         </div>
       </div>
 
-      {/* 导航菜单 */}
-      <nav className="p-4 space-y-2">
-        {navigationItems.map((item) => {
-          const IconComponent = item.icon;
-          return (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={({ isActive }) =>
-                `flex items-center px-4 py-3 rounded-xl transition-all duration-200 group relative ${
-                  isActive
-                    ? 'bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-200/50 text-blue-700 shadow-sm'
-                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                } ${collapsed ? 'justify-center' : 'justify-between'}`
-              }
-            >
-              {({ isActive }) => (
-                <>
-                  <div className="flex items-center">
-                    <IconComponent className={`w-5 h-5 ${item.color} ${collapsed ? '' : 'mr-3'}`} />
-                    {!collapsed && (
-                      <span className="font-medium">{item.label}</span>
+      {/* 导航菜单 - 可滚动区域 */}
+      <div className="flex-1 overflow-hidden">
+        <nav 
+          className="p-4 space-y-2 h-full overflow-y-auto sidebar-scroll"
+          style={{ maxHeight: 'calc(100vh - 200px)' }}
+          onWheel={(e) => {
+            // 允许鼠标滚轮滚动
+            e.currentTarget.scrollTop += e.deltaY;
+          }}
+        >
+          {navigationItems.map((item) => {
+            const IconComponent = item.icon;
+            return (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                className={({ isActive }) =>
+                  `flex items-center px-4 py-3 rounded-xl transition-all duration-200 group relative ${
+                    isActive
+                      ? 'bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-200/50 text-blue-700 shadow-sm'
+                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                  } ${collapsed ? 'justify-center' : 'justify-between'}`
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    <div className="flex items-center">
+                      <IconComponent className={`w-5 h-5 ${item.color} ${collapsed ? '' : 'mr-3'}`} />
+                      {!collapsed && (
+                        <span className="font-medium">{item.label}</span>
+                      )}
+                    </div>
+                    
+                    {/* 活动状态指示器 */}
+                    {isActive && (
+                      <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-1 h-6 bg-blue-500 rounded-r-full"></div>
                     )}
-                  </div>
-                  
-                  {/* 活动状态指示器 */}
-                  {isActive && (
-                    <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-1 h-6 bg-blue-500 rounded-r-full"></div>
-                  )}
-                </>
-              )}
-            </NavLink>
-          );
-        })}
-      </nav>
+                  </>
+                )}
+              </NavLink>
+            );
+          })}
+        </nav>
+      </div>
 
       {/* 设置菜单 */}
       {!collapsed && (

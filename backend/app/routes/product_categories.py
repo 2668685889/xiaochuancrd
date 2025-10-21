@@ -8,7 +8,7 @@ from sqlalchemy import select, func
 from typing import List, Optional
 import re
 
-from app.core.database import get_db
+from app.core.database import get_async_db
 from app.models.product_category import ProductCategory
 from app.schemas.product_category import (
     ProductCategoryCreate, ProductCategoryUpdate, ProductCategoryResponse,
@@ -26,7 +26,7 @@ async def get_product_categories(
     size: int = Query(20, ge=1, le=100, description="每页大小"),
     search: Optional[str] = Query(None, description="搜索关键词"),
     parent_uuid: Optional[str] = Query(None, description="父级分类UUID"),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_async_db)
 ):
     """获取产品分类列表"""
     # 构建查询条件
@@ -75,7 +75,7 @@ async def get_product_categories(
 
 
 @router.get("/ProductCategories/tree", response_model=ApiResponse[ProductCategoryTreeResponse])
-async def get_product_category_tree(db: AsyncSession = Depends(get_db)):
+async def get_product_category_tree(db: AsyncSession = Depends(get_async_db)):
     """获取产品分类树形结构"""
     # 获取所有激活的分类
     result = await db.execute(
@@ -133,7 +133,7 @@ async def get_product_category_tree(db: AsyncSession = Depends(get_db)):
 
 
 @router.get("/ProductCategories/{category_uuid}", response_model=ApiResponse[ProductCategoryResponse])
-async def get_product_category(category_uuid: str, db: AsyncSession = Depends(get_db)):
+async def get_product_category(category_uuid: str, db: AsyncSession = Depends(get_async_db)):
     """获取单个产品分类"""
     result = await db.execute(
         select(ProductCategory).where(ProductCategory.uuid == category_uuid, ProductCategory.is_active == True)
@@ -158,7 +158,7 @@ async def get_product_category(category_uuid: str, db: AsyncSession = Depends(ge
 
 
 @router.post("/ProductCategories", response_model=ApiResponse[ProductCategoryResponse])
-async def create_product_category(category_data: ProductCategoryCreate, db: AsyncSession = Depends(get_db)):
+async def create_product_category(category_data: ProductCategoryCreate, db: AsyncSession = Depends(get_async_db)):
     """创建新产品分类"""
     # 导入编码生成工具
     from app.utils.code_generator import generate_unique_product_category_code
@@ -217,7 +217,7 @@ async def create_product_category(category_data: ProductCategoryCreate, db: Asyn
 async def update_product_category(
     category_uuid: str, 
     category_data: ProductCategoryUpdate, 
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_async_db)
 ):
     """更新产品分类信息"""
     result = await db.execute(select(ProductCategory).where(ProductCategory.uuid == category_uuid))
@@ -285,7 +285,7 @@ async def update_product_category(
 
 
 @router.delete("/ProductCategories/{category_uuid}", response_model=ApiResponse)
-async def delete_product_category(category_uuid: str, db: AsyncSession = Depends(get_db)):
+async def delete_product_category(category_uuid: str, db: AsyncSession = Depends(get_async_db)):
     """删除产品分类（软删除）"""
     result = await db.execute(select(ProductCategory).where(ProductCategory.uuid == category_uuid))
     product_category = result.scalar_one_or_none()

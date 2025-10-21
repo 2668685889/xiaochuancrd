@@ -492,17 +492,8 @@ class CozeService:
                 
         except Exception as e:
             logger.error(f"获取表 {table_name} 最近变化失败: {str(e)}")
-            # 如果查询失败，返回一些模拟数据用于测试
-            logger.info("返回模拟数据用于测试同步功能")
-            return [
-                {
-                    "uuid": str(uuid4()),
-                    "table_name": table_name,
-                    "change_type": "INSERT",
-                    "timestamp": datetime.now().isoformat(),
-                    "test_data": True
-                }
-            ]
+            # 查询失败时返回空列表，而不是模拟数据
+            return []
 
     @classmethod
     async def get_table_data(
@@ -1418,7 +1409,8 @@ class CozeService:
         logger.warning(f"找到表配置，模型: {model}, 字段列表: {fields}")
         
         try:
-            async for session in get_db():
+            from app.core.database import AsyncSessionLocal
+            async with AsyncSessionLocal() as session:
                 logger.warning(f"数据库会话已建立，开始构建查询")
                 
                 # 构建查询 - 使用SQLAlchemy 2.0的正确语法
@@ -1670,8 +1662,7 @@ class CozeService:
     @classmethod
     def get_upload_history(cls, page: int = 1, size: int = 20) -> List[CozeUploadHistory]:
         """获取上传历史记录"""
-        # 这里可以从数据库查询实际的历史记录
-        # 目前返回模拟数据
+        # 从内存中的任务列表获取历史记录
         
         history = []
         for upload_id, task_info in cls._upload_tasks.items():

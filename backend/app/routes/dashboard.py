@@ -8,14 +8,14 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, text
 from typing import Dict, Any
 
-from app.core.database import get_db
+from app.core.database import get_async_db
 from app.models import Product, Supplier, InventoryRecord, PurchaseOrder, SalesOrder
 
 router = APIRouter()
 
 
 @router.get("/Dashboard/Stats")
-async def get_dashboard_stats(db: AsyncSession = Depends(get_db)):
+async def get_dashboard_stats(db: AsyncSession = Depends(get_async_db)):
     """获取仪表盘统计数据"""
     try:
         # 获取产品总数
@@ -70,7 +70,7 @@ async def get_dashboard_stats(db: AsyncSession = Depends(get_db)):
 
 
 @router.get("/Dashboard/LowStockAlerts")
-async def get_low_stock_alerts(db: AsyncSession = Depends(get_db)):
+async def get_low_stock_alerts(db: AsyncSession = Depends(get_async_db)):
     """获取低库存预警列表"""
     try:
         low_stock_products_result = await db.execute(
@@ -107,7 +107,7 @@ async def get_low_stock_alerts(db: AsyncSession = Depends(get_db)):
 
 
 @router.get("/Dashboard/ProductDistribution")
-async def get_product_distribution(db: AsyncSession = Depends(get_db)):
+async def get_product_distribution(db: AsyncSession = Depends(get_async_db)):
     """获取产品分类分布数据（用于饼状图）"""
     try:
         # 检查是否有分类数据
@@ -179,7 +179,7 @@ async def get_product_distribution(db: AsyncSession = Depends(get_db)):
 
 
 @router.get("/Dashboard/RecentActivities")
-async def get_recent_activities(db: AsyncSession = Depends(get_db)):
+async def get_recent_activities(db: AsyncSession = Depends(get_async_db)):
     """获取最近活动记录"""
     try:
         # 获取最近的库存变动记录

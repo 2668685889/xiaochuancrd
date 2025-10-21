@@ -57,7 +57,9 @@ class CDCService:
     async def _process_pending_changes(cls):
         """处理待处理的数据变化"""
         try:
-            async for session in get_db():
+            # 使用异步数据库会话
+            from app.core.database import AsyncSessionLocal
+            async with AsyncSessionLocal() as session:
                 # 查询未处理的数据变化日志
                 query = session.query(DataChangeLog).filter(
                     DataChangeLog.processed == 0
@@ -211,7 +213,8 @@ class CDCService:
     async def get_pending_changes_count(cls) -> int:
         """获取待处理的数据变化数量"""
         try:
-            async for session in get_db():
+            from app.core.database import AsyncSessionLocal
+            async with AsyncSessionLocal() as session:
                 query = session.query(DataChangeLog).filter(
                     DataChangeLog.processed == 0
                 )
@@ -225,7 +228,8 @@ class CDCService:
     async def cleanup_processed_changes(cls, days: int = 7):
         """清理已处理的数据变化记录"""
         try:
-            async for session in get_db():
+            from app.core.database import AsyncSessionLocal
+            async with AsyncSessionLocal() as session:
                 cutoff_date = datetime.now() - timedelta(days=days)
                 
                 query = session.query(DataChangeLog).filter(
@@ -237,14 +241,14 @@ class CDCService:
                 changes_to_delete = result.scalars().all()
                 
                 if changes_to_delete:
+                    # 删除已处理的记录
                     for change in changes_to_delete:
                         await session.delete(change)
                     
                     await session.commit()
                     logger.info(f"清理了 {len(changes_to_delete)} 条已处理的数据变化记录")
-                
         except Exception as e:
-            logger.error(f"清理已处理数据变化失败: {str(e)}")
+            logger.error(f"清理已处理数据变化记录失败: {str(e)}")
 
 
 # 启动CDC监控的辅助函数

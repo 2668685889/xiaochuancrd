@@ -4,10 +4,11 @@
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import Session
 from sqlalchemy.future import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.database import get_db
+from app.core.database import get_async_db
 from app.models.user import User
 from app.schemas.auth import LoginRequest, LoginResponse, UserResponse
 from app.schemas.response import ApiResponse
@@ -19,10 +20,10 @@ security = HTTPBearer()
 
 
 @router.post("/auth/login", response_model=ApiResponse[LoginResponse])
-async def login(login_data: LoginRequest, db: AsyncSession = Depends(get_db)):
+async def login(login_data: LoginRequest, db: AsyncSession = Depends(get_async_db)):
     """用户登录"""
     # 查询用户
-    result = await db.execute(select(User).where(User.username == login_data.username))
+    result = db.execute(select(User).where(User.username == login_data.username))
     user = result.scalar_one_or_none()
     
     if not user or not verify_password(login_data.password, user.password_hash):
@@ -43,7 +44,7 @@ async def login(login_data: LoginRequest, db: AsyncSession = Depends(get_db)):
     # 更新最后登录时间
     from datetime import datetime
     user.last_login = datetime.utcnow()
-    await db.commit()
+    db.commit()
     
     # 直接使用正确的字段名构建用户响应数据
     user_response = UserResponse(

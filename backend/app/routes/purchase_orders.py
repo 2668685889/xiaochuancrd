@@ -9,7 +9,7 @@ from sqlalchemy import or_, func
 from datetime import datetime
 from uuid import uuid4
 
-from app.core.database import get_db
+from app.core.database import get_async_db
 from app.models.purchase_order import PurchaseOrder, PurchaseOrderItem
 from app.models.supplier import Supplier
 from app.models.product import Product
@@ -32,7 +32,7 @@ def generate_order_number():
 
 @router.get("/PurchaseOrders", response_model=ApiResponse[PaginatedResponse[PurchaseOrderResponse]])
 async def get_purchase_orders(
-    db: AsyncSession = Depends(get_db),
+    db: AsyncSession = Depends(get_async_db),
     page: int = Query(1, ge=1, description="页码"),
     size: int = Query(20, ge=1, le=100, description="每页数量"),
     search: str = Query(None, description="搜索关键词（订单编号）"),
@@ -177,7 +177,7 @@ async def get_purchase_orders(
 
 
 @router.get("/PurchaseOrders/{order_uuid}", response_model=ApiResponse[PurchaseOrderResponse])
-async def get_purchase_order(order_uuid: str, db: AsyncSession = Depends(get_db)):
+async def get_purchase_order(order_uuid: str, db: AsyncSession = Depends(get_async_db)):
     """获取单个采购订单"""
     result = await db.execute(
         select(PurchaseOrder).where(PurchaseOrder.uuid == order_uuid)
@@ -266,7 +266,7 @@ async def get_purchase_order(order_uuid: str, db: AsyncSession = Depends(get_db)
 @router.post("/PurchaseOrders", response_model=ApiResponse[PurchaseOrderResponse])
 async def create_purchase_order(
     order_data: PurchaseOrderCreate, 
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_async_db)
 ):
     """创建采购订单"""
     # 处理modelUuid字段，将空字符串转换为None
@@ -422,7 +422,7 @@ async def create_purchase_order(
 async def update_purchase_order(
     order_uuid: str, 
     order_data: PurchaseOrderUpdate, 
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_async_db)
 ):
     """更新采购订单信息"""
     result = await db.execute(select(PurchaseOrder).where(PurchaseOrder.uuid == order_uuid))
@@ -566,7 +566,7 @@ async def update_purchase_order(
 
 
 @router.delete("/PurchaseOrders/{order_uuid}", response_model=ApiResponse[dict])
-async def delete_purchase_order(order_uuid: str, db: AsyncSession = Depends(get_db)):
+async def delete_purchase_order(order_uuid: str, db: AsyncSession = Depends(get_async_db)):
     """删除采购订单（硬删除）"""
     result = await db.execute(select(PurchaseOrder).where(PurchaseOrder.uuid == order_uuid))
     order = result.scalar_one_or_none()

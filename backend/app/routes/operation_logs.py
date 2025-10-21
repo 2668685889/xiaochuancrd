@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from typing import Optional
 from datetime import datetime
 
-from app.core.database import get_db
+from app.core.database import get_async_db
 from app.services.operation_log_service import OperationLogService
 from app.schemas.operation_log import (
     OperationLogCreate, 
@@ -31,7 +31,7 @@ async def get_operation_logs(
     end_date: Optional[datetime] = Query(None, description="结束时间"),
     page: int = Query(1, ge=1, description="页码"),
     size: int = Query(20, ge=1, le=100, description="每页大小"),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_async_db)
 ):
     """获取操作日志列表"""
     try:
@@ -67,7 +67,7 @@ async def get_operation_logs(
 @router.get("/OperationLogs/{log_uuid}", response_model=ApiResponse[OperationLogResponse])
 async def get_operation_log(
     log_uuid: str,
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_async_db)
 ):
     """根据UUID获取操作日志详情"""
     try:
@@ -89,7 +89,7 @@ async def get_operation_log(
 @router.get("/OperationLogs/Recent", response_model=ApiResponse[list[OperationLogResponse]])
 async def get_recent_operation_logs(
     limit: int = Query(10, ge=1, le=50, description="限制数量"),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_async_db)
 ):
     """获取最近的操作日志"""
     try:
@@ -107,7 +107,7 @@ async def get_recent_operation_logs(
 @router.get("/OperationLogs/Statistics", response_model=ApiResponse[dict])
 async def get_operation_log_statistics(
     days: int = Query(30, ge=1, le=365, description="统计天数"),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_async_db)
 ):
     """获取操作日志统计信息"""
     try:
@@ -124,7 +124,7 @@ async def get_operation_log_statistics(
 @router.post("/OperationLogs", response_model=ApiResponse[OperationLogResponse])
 async def create_operation_log(
     log_data: OperationLogCreate,
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_async_db)
 ):
     """创建操作日志（内部使用，不对外公开）"""
     try:

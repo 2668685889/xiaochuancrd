@@ -8,7 +8,7 @@ from sqlalchemy import select, func, or_
 from typing import Optional
 from datetime import datetime
 
-from app.core.database import get_db
+from app.core.database import get_async_db
 from app.models.customer import Customer
 from app.schemas.customer import (
     CustomerResponse, 
@@ -24,7 +24,7 @@ router = APIRouter()
 
 @router.get("/Customers", response_model=ApiPaginatedResponse[CustomerResponse])
 async def get_customers(
-    db: AsyncSession = Depends(get_db),
+    db: AsyncSession = Depends(get_async_db),
     page: int = Query(1, ge=1, description="页码"),
     size: int = Query(20, ge=1, le=100, description="每页大小"),
     search: str = Query(None, description="搜索关键词"),
@@ -77,7 +77,7 @@ async def get_customers(
 
 
 @router.get("/Customers/{customer_uuid}", response_model=ApiResponse[CustomerResponse])
-async def get_customer(customer_uuid: str, db: AsyncSession = Depends(get_db)):
+async def get_customer(customer_uuid: str, db: AsyncSession = Depends(get_async_db)):
     """获取单个客户"""
     result = await db.execute(
         select(Customer).where(Customer.uuid == customer_uuid, Customer.deleted_at.is_(None))
@@ -102,7 +102,7 @@ async def get_customer(customer_uuid: str, db: AsyncSession = Depends(get_db)):
 
 
 @router.post("/Customers", response_model=ApiResponse[CustomerResponse])
-async def create_customer(customer_data: CustomerCreate, db: AsyncSession = Depends(get_db)):
+async def create_customer(customer_data: CustomerCreate, db: AsyncSession = Depends(get_async_db)):
     """创建客户"""
     # 导入编码生成工具
     from app.utils.code_generator import generate_unique_customer_code
@@ -162,7 +162,7 @@ async def create_customer(customer_data: CustomerCreate, db: AsyncSession = Depe
 async def update_customer(
     customer_uuid: str, 
     customer_data: CustomerUpdate, 
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_async_db)
 ):
     """更新客户信息"""
     result = await db.execute(
@@ -226,7 +226,7 @@ async def update_customer(
 
 
 @router.delete("/Customers/{customer_uuid}", response_model=ApiResponse[dict])
-async def delete_customer(customer_uuid: str, db: AsyncSession = Depends(get_db)):
+async def delete_customer(customer_uuid: str, db: AsyncSession = Depends(get_async_db)):
     """删除客户（软删除）"""
     result = await db.execute(
         select(Customer).where(Customer.uuid == customer_uuid, Customer.deleted_at.is_(None))

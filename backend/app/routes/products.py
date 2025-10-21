@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, or_
 from typing import Optional
 
-from app.core.database import get_db
+from app.core.database import get_async_db
 from app.models.product import Product
 from app.models.supplier import Supplier
 from app.models.product_model import ProductModel
@@ -28,7 +28,7 @@ async def get_products(
     page: int = Query(1, ge=1, description="页码"),
     size: int = Query(20, ge=1, le=100, description="每页大小"),
     search: Optional[str] = Query(None, description="搜索关键词"),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_async_db)
 ):
     """获取产品列表"""
     # 构建查询条件，包含关联的供货商和产品型号
@@ -88,7 +88,7 @@ async def get_products(
 
 
 @router.get("/Products/{product_uuid}", response_model=ApiResponse[ProductResponse])
-async def get_product(product_uuid: str, db: AsyncSession = Depends(get_db)):
+async def get_product(product_uuid: str, db: AsyncSession = Depends(get_async_db)):
     """获取单个产品"""
     # 构建查询条件，包含关联的供货商和产品型号
     query = (
@@ -124,7 +124,7 @@ async def get_product(product_uuid: str, db: AsyncSession = Depends(get_db)):
 
 
 @router.post("/Products", response_model=ApiResponse[ProductResponse])
-async def create_product(product_data: ProductCreate, db: AsyncSession = Depends(get_db)):
+async def create_product(product_data: ProductCreate, db: AsyncSession = Depends(get_async_db)):
     """创建新产品"""
     # 导入编码生成工具
     from app.utils.code_generator import generate_unique_product_code
@@ -169,7 +169,7 @@ async def create_product(product_data: ProductCreate, db: AsyncSession = Depends
 async def update_product(
     product_uuid: str, 
     product_data: ProductUpdate, 
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_async_db)
 ):
     """更新产品信息"""
     result = await db.execute(select(Product).where(Product.uuid == product_uuid))
@@ -227,7 +227,7 @@ async def update_product(
 
 
 @router.delete("/Products/{product_uuid}", response_model=ApiResponse[dict])
-async def delete_product(product_uuid: str, db: AsyncSession = Depends(get_db)):
+async def delete_product(product_uuid: str, db: AsyncSession = Depends(get_async_db)):
     """删除产品（软删除）"""
     result = await db.execute(select(Product).where(Product.uuid == product_uuid))
     product = result.scalar_one_or_none()
