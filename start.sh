@@ -29,13 +29,9 @@ log_error() {
 
 log_info "🚀 启动进销存管理系统..."
 
-# 检查项目目录结构
-if [ -d "xiaochuancrd/backend" ] && [ -d "xiaochuancrd/frontend" ]; then
-    # 在项目根目录，需要进入xiaochuancrd目录
-    log_info "检测到项目目录结构，进入xiaochuancrd目录..."
-    cd xiaochuancrd
-elif [ ! -d "backend" ] || [ ! -d "frontend" ]; then
-    log_error "项目目录结构不正确，请确保backend和frontend目录存在"
+# 检查是否在项目根目录
+if [ ! -d "backend" ] || [ ! -d "frontend" ]; then
+    log_error "请在项目根目录下运行此脚本"
     exit 1
 fi
 

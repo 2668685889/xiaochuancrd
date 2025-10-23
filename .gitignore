@@ -1,107 +1,75 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-
-# Virtual environments
-venv/
-env/
-ENV/
-env.bak/
-venv.bak/
-
-# IDEs
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Logs
-*.log
-logs/
-
-# Database
-*.db
-*.sqlite
-*.sqlite3
-
-# Node.js
+# 依赖目录
 node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.npm
-.yarn-integrity
+backend/venv/
+backend/wuyong.db
 
-# Frontend build
+# 构建输出
 dist/
 build/
 
-# Environment variables
+# 环境变量文件
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-# Jupyter Notebook
-.ipynb_checkpoints
+# 日志文件
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# pytest
-.pytest_cache/
-.coverage
-htmlcov/
+# 运行时数据
+pids
+*.pid
+*.seed
+*.pid.lock
 
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
+# IDE文件
+.vscode/
+.idea/
+*.swp
+*.swo
 
-# Pyre type checker
-.pyre/
+# 操作系统文件
+.DS_Store
+Thumbs.db
 
-# Temporary files
+# 临时文件
 *.tmp
 *.temp
+
+# Python缓存
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# 数据库文件
+*.sqlite
+*.db
+
+# 测试覆盖率
+coverage/
+.nyc_output/
+
+# 包锁文件（可选，根据团队规范决定是否提交）
+# package-lock.json
+# yarn.lock
+
+# 前端构建缓存
 .cache/
+.parcel-cache/
 
-# API Keys and secrets
-secrets/
-*.pem
-*.key
-config/secrets/
+# 后端临时文件
+backend/static/
+backend/.pytest_cache/
 
-# Backup files
-*.bak
-*.backup
+# 进程ID文件
+.backend.pid
+.frontend.pid
 
-# Trae AI
-.trae/
+# 本地配置文件
+my.cnf
