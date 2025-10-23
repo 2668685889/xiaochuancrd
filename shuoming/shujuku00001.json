@@ -1,0 +1,3619 @@
+{
+  "alembic_version": {
+    "comment": "数据库版本表",
+    "comment_chinese": "数据库版本表",
+    "record_count": 1,
+    "columns": [
+      {
+        "name": "version_num",
+        "type": "varchar(32)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": null,
+        "extra": "",
+        "comment": "版本号",
+        "type_chinese": "字符串",
+        "name_chinese": "版本号"
+      }
+    ]
+  },
+  "coze_sync_configs": {
+    "comment": "Coze同步配置表",
+    "comment_chinese": "Coze同步配置表",
+    "record_count": 2,
+    "columns": [
+      {
+        "name": "uuid",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": "uuid()",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "唯一标识符",
+        "type_chinese": "字符",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "config_title",
+        "type": "varchar(200)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "配置标题",
+        "type_chinese": "字符串",
+        "name_chinese": "配置标题"
+      },
+      {
+        "name": "table_name",
+        "type": "varchar(100)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "同步的数据表名",
+        "type_chinese": "字符串",
+        "name_chinese": "表名"
+      },
+      {
+        "name": "coze_workflow_id",
+        "type": "varchar(100)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "Coze工作流ID（向后兼容）",
+        "type_chinese": "字符串",
+        "name_chinese": "Coze工作流ID"
+      },
+      {
+        "name": "coze_workflow_id_insert",
+        "type": "varchar(100)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "新增操作工作流ID",
+        "type_chinese": "字符串",
+        "name_chinese": "新增操作工作流ID"
+      },
+      {
+        "name": "coze_workflow_id_update",
+        "type": "varchar(100)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "更新操作工作流ID",
+        "type_chinese": "字符串",
+        "name_chinese": "更新操作工作流ID"
+      },
+      {
+        "name": "coze_workflow_id_delete",
+        "type": "varchar(100)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "删除操作工作流ID",
+        "type_chinese": "字符串",
+        "name_chinese": "删除操作工作流ID"
+      },
+      {
+        "name": "coze_api_url",
+        "type": "varchar(500)",
+        "nullable": "NO",
+        "key": "",
+        "default": "https://api.coze.cn",
+        "extra": "",
+        "comment": "Coze API地址",
+        "type_chinese": "字符串",
+        "name_chinese": "Coze API地址"
+      },
+      {
+        "name": "coze_api_key",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "Coze API密钥",
+        "type_chinese": "文本",
+        "name_chinese": "Coze API密钥"
+      },
+      {
+        "name": "sync_on_insert",
+        "type": "tinyint(3)",
+        "nullable": "NO",
+        "key": "",
+        "default": "1",
+        "extra": "",
+        "comment": "是否同步插入操作",
+        "type_chinese": "小整数",
+        "name_chinese": "是否同步插入操作"
+      },
+      {
+        "name": "sync_on_update",
+        "type": "tinyint(3)",
+        "nullable": "NO",
+        "key": "",
+        "default": "1",
+        "extra": "",
+        "comment": "是否同步更新操作",
+        "type_chinese": "小整数",
+        "name_chinese": "是否同步更新操作"
+      },
+      {
+        "name": "sync_on_delete",
+        "type": "tinyint(3)",
+        "nullable": "NO",
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "comment": "是否同步删除操作",
+        "type_chinese": "小整数",
+        "name_chinese": "是否同步删除操作"
+      },
+      {
+        "name": "enabled",
+        "type": "tinyint(3)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": "1",
+        "extra": "",
+        "comment": "是否启用同步",
+        "type_chinese": "小整数",
+        "name_chinese": "是否启用"
+      },
+      {
+        "name": "selected_fields",
+        "type": "json",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "选择的字段列表",
+        "type_chinese": "JSON数据",
+        "name_chinese": "选择的字段"
+      },
+      {
+        "name": "status",
+        "type": "varchar(20)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": "ACTIVE",
+        "extra": "",
+        "comment": "同步状态：ACTIVE, PAUSED, ERROR",
+        "type_chinese": "字符串",
+        "name_chinese": "状态"
+      },
+      {
+        "name": "last_sync_time",
+        "type": "timestamp",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "最后同步时间",
+        "type_chinese": "时间戳",
+        "name_chinese": "最后同步时间"
+      },
+      {
+        "name": "last_error",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "最后错误信息",
+        "type_chinese": "文本",
+        "name_chinese": "最后错误信息"
+      },
+      {
+        "name": "created_by",
+        "type": "char(36)",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "创建者UUID",
+        "type_chinese": "字符",
+        "name_chinese": "创建者"
+      },
+      {
+        "name": "created_at",
+        "type": "timestamp",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "时间戳",
+        "name_chinese": "创建时间"
+      },
+      {
+        "name": "updated_at",
+        "type": "timestamp",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+        "comment": "更新时间",
+        "type_chinese": "时间戳",
+        "name_chinese": "更新时间"
+      },
+      {
+        "name": "total_sync_count",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "comment": "总同步次数",
+        "type_chinese": "整数",
+        "name_chinese": "总同步次数"
+      },
+      {
+        "name": "success_sync_count",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "comment": "成功同步次数",
+        "type_chinese": "整数",
+        "name_chinese": "成功同步次数"
+      },
+      {
+        "name": "failed_sync_count",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "comment": "失败同步次数",
+        "type_chinese": "整数",
+        "name_chinese": "失败同步次数"
+      },
+      {
+        "name": "last_sync_type",
+        "type": "varchar(20)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "最后同步类型：MANUAL, AUTO_INSERT, AUTO_UPDATE, AUTO_DELETE",
+        "type_chinese": "字符串",
+        "name_chinese": "最后同步类型"
+      },
+      {
+        "name": "insert_sync_count",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "comment": "新增数据同步次数",
+        "type_chinese": "整数",
+        "name_chinese": "新增同步次数"
+      },
+      {
+        "name": "update_sync_count",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "comment": "更新数据同步次数",
+        "type_chinese": "整数",
+        "name_chinese": "更新同步次数"
+      },
+      {
+        "name": "delete_sync_count",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "comment": "删除数据同步次数",
+        "type_chinese": "整数",
+        "name_chinese": "删除同步次数"
+      },
+      {
+        "name": "manual_sync_count",
+        "type": "int(10)",
+        "nullable": "YES",
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "comment": "手动同步次数",
+        "type_chinese": "整数",
+        "name_chinese": "手动同步次数"
+      },
+      {
+        "name": "auto_sync_count",
+        "type": "int(10)",
+        "nullable": "YES",
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "comment": "自动同步次数",
+        "type_chinese": "整数",
+        "name_chinese": "自动同步次数"
+      },
+      {
+        "name": "last_manual_sync_time",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "最后手动同步时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "最后手动同步时间"
+      },
+      {
+        "name": "last_auto_sync_time",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "最后自动同步时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "最后自动同步时间"
+      }
+    ]
+  },
+  "customers": {
+    "comment": "客户表",
+    "comment_chinese": "客户表",
+    "record_count": 7,
+    "columns": [
+      {
+        "name": "uuid",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": null,
+        "extra": "",
+        "comment": "唯一标识符",
+        "type_chinese": "字符",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "customer_name",
+        "type": "varchar(100)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "客户名称",
+        "type_chinese": "字符串",
+        "name_chinese": "客户名称"
+      },
+      {
+        "name": "customer_code",
+        "type": "varchar(50)",
+        "nullable": "NO",
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "comment": "客户编码",
+        "type_chinese": "字符串",
+        "name_chinese": "客户编码"
+      },
+      {
+        "name": "contact_person",
+        "type": "varchar(50)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "联系人",
+        "type_chinese": "字符串",
+        "name_chinese": "联系人"
+      },
+      {
+        "name": "phone",
+        "type": "varchar(20)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "联系电话",
+        "type_chinese": "字符串",
+        "name_chinese": "电话"
+      },
+      {
+        "name": "email",
+        "type": "varchar(100)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "邮箱地址",
+        "type_chinese": "字符串",
+        "name_chinese": "邮箱"
+      },
+      {
+        "name": "address",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "地址信息",
+        "type_chinese": "文本",
+        "name_chinese": "地址"
+      },
+      {
+        "name": "is_active",
+        "type": "tinyint(3)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "是否激活",
+        "type_chinese": "小整数",
+        "name_chinese": "是否激活"
+      },
+      {
+        "name": "created_at",
+        "type": "timestamp",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "创建时间",
+        "type_chinese": "时间戳",
+        "name_chinese": "创建时间"
+      },
+      {
+        "name": "updated_at",
+        "type": "timestamp",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "更新时间",
+        "type_chinese": "时间戳",
+        "name_chinese": "更新时间"
+      },
+      {
+        "name": "deleted_at",
+        "type": "timestamp",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "软删除时间",
+        "type_chinese": "时间戳",
+        "name_chinese": "删除时间"
+      }
+    ]
+  },
+  "data_change_logs": {
+    "comment": "数据变更日志表",
+    "comment_chinese": "数据变更日志表",
+    "record_count": 0,
+    "columns": [
+      {
+        "name": "uuid",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": null,
+        "extra": "",
+        "comment": "唯一标识符",
+        "type_chinese": "字符",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "table_name",
+        "type": "varchar(100)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "表名",
+        "type_chinese": "字符串",
+        "name_chinese": "表名"
+      },
+      {
+        "name": "record_uuid",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "记录UUID",
+        "type_chinese": "字符",
+        "name_chinese": "记录UUID"
+      },
+      {
+        "name": "operation_type",
+        "type": "varchar(20)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "操作类型: INSERT, UPDATE, DELETE",
+        "type_chinese": "字符串",
+        "name_chinese": "操作类型"
+      },
+      {
+        "name": "change_data",
+        "type": "json",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "变化数据",
+        "type_chinese": "JSON数据",
+        "name_chinese": "变更数据"
+      },
+      {
+        "name": "created_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "创建时间"
+      },
+      {
+        "name": "processed",
+        "type": "int(10)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "是否已处理: 0-未处理, 1-已处理",
+        "type_chinese": "整数",
+        "name_chinese": "是否已处理"
+      },
+      {
+        "name": "processed_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "处理时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "处理时间"
+      }
+    ]
+  },
+  "inventory_records": {
+    "comment": "库存记录表",
+    "comment_chinese": "库存记录表",
+    "record_count": 25,
+    "columns": [
+      {
+        "name": "uuid",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": "uuid()",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "唯一标识符",
+        "type_chinese": "字符",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "product_uuid",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "产品UUID",
+        "type_chinese": "字符",
+        "name_chinese": "产品UUID"
+      },
+      {
+        "name": "change_type",
+        "type": "enum",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "变更类型",
+        "type_chinese": "枚举",
+        "name_chinese": "变更类型"
+      },
+      {
+        "name": "quantity_change",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "数量变更",
+        "type_chinese": "整数",
+        "name_chinese": "数量变更"
+      },
+      {
+        "name": "current_quantity",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "当前库存数量",
+        "type_chinese": "整数",
+        "name_chinese": "当前库存数量"
+      },
+      {
+        "name": "remark",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "备注",
+        "type_chinese": "文本",
+        "name_chinese": "备注"
+      },
+      {
+        "name": "record_date",
+        "type": "date",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "记录日期",
+        "type_chinese": "日期",
+        "name_chinese": "记录日期"
+      },
+      {
+        "name": "created_by",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "创建者",
+        "type_chinese": "字符",
+        "name_chinese": "创建者"
+      },
+      {
+        "name": "created_at",
+        "type": "timestamp",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "时间戳",
+        "name_chinese": "创建时间"
+      }
+    ]
+  },
+  "operation_logs": {
+    "comment": "操作日志表",
+    "comment_chinese": "操作日志表",
+    "record_count": 726152,
+    "columns": [
+      {
+        "name": "uuid",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": null,
+        "extra": "",
+        "comment": "唯一标识符",
+        "type_chinese": "字符",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "operation_type",
+        "type": "varchar(50)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "操作类型：CREATE, UPDATE, DELETE, LOGIN, LOGOUT等",
+        "type_chinese": "字符串",
+        "name_chinese": "操作类型"
+      },
+      {
+        "name": "operation_module",
+        "type": "varchar(50)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "操作模块：products, suppliers, purchase_orders等",
+        "type_chinese": "字符串",
+        "name_chinese": "操作模块"
+      },
+      {
+        "name": "operation_description",
+        "type": "text",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "操作描述",
+        "type_chinese": "文本",
+        "name_chinese": "操作描述"
+      },
+      {
+        "name": "target_uuid",
+        "type": "char(36)",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "操作目标UUID（如产品UUID、订单UUID等）",
+        "type_chinese": "字符",
+        "name_chinese": "目标UUID"
+      },
+      {
+        "name": "target_name",
+        "type": "varchar(200)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "操作目标名称",
+        "type_chinese": "字符串",
+        "name_chinese": "目标名称"
+      },
+      {
+        "name": "before_data",
+        "type": "json",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "操作前数据（JSON格式）",
+        "type_chinese": "JSON数据",
+        "name_chinese": "变更前数据"
+      },
+      {
+        "name": "after_data",
+        "type": "json",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "操作后数据（JSON格式）",
+        "type_chinese": "JSON数据",
+        "name_chinese": "变更后数据"
+      },
+      {
+        "name": "operator_uuid",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "操作者UUID",
+        "type_chinese": "字符",
+        "name_chinese": "操作者UUID"
+      },
+      {
+        "name": "operator_name",
+        "type": "varchar(100)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "操作者姓名",
+        "type_chinese": "字符串",
+        "name_chinese": "操作者姓名"
+      },
+      {
+        "name": "operator_ip",
+        "type": "varchar(45)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "操作者IP地址",
+        "type_chinese": "字符串",
+        "name_chinese": "操作者IP"
+      },
+      {
+        "name": "operation_status",
+        "type": "enum",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "操作状态",
+        "type_chinese": "枚举",
+        "name_chinese": "操作状态"
+      },
+      {
+        "name": "error_message",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "错误信息（操作失败时）",
+        "type_chinese": "文本",
+        "name_chinese": "错误信息"
+      },
+      {
+        "name": "operation_time",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "操作时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "操作时间"
+      },
+      {
+        "name": "created_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "创建时间"
+      }
+    ]
+  },
+  "product_categories": {
+    "comment": "产品分类表",
+    "comment_chinese": "产品分类表",
+    "record_count": 11,
+    "columns": [
+      {
+        "name": "uuid",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": null,
+        "extra": "",
+        "comment": "唯一标识符",
+        "type_chinese": "字符",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "category_name",
+        "type": "varchar(100)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "分类名称",
+        "type_chinese": "字符串",
+        "name_chinese": "分类名称"
+      },
+      {
+        "name": "category_code",
+        "type": "varchar(50)",
+        "nullable": "NO",
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "comment": "分类编码",
+        "type_chinese": "字符串",
+        "name_chinese": "分类编码"
+      },
+      {
+        "name": "description",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "描述",
+        "type_chinese": "文本",
+        "name_chinese": "描述"
+      },
+      {
+        "name": "parent_uuid",
+        "type": "char(36)",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "父级UUID",
+        "type_chinese": "字符",
+        "name_chinese": "父级UUID"
+      },
+      {
+        "name": "sort_order",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "排序",
+        "type_chinese": "整数",
+        "name_chinese": "排序"
+      },
+      {
+        "name": "is_active",
+        "type": "tinyint(3)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "是否激活",
+        "type_chinese": "小整数",
+        "name_chinese": "是否激活"
+      },
+      {
+        "name": "created_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "创建时间"
+      },
+      {
+        "name": "updated_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "更新时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "更新时间"
+      },
+      {
+        "name": "deleted_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "删除时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "删除时间"
+      }
+    ]
+  },
+  "product_models": {
+    "comment": "产品型号表",
+    "comment_chinese": "产品型号表",
+    "record_count": 44,
+    "columns": [
+      {
+        "name": "uuid",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": null,
+        "extra": "",
+        "comment": "唯一标识符",
+        "type_chinese": "字符",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "model_name",
+        "type": "varchar(100)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "型号名称",
+        "type_chinese": "字符串",
+        "name_chinese": "型号名称"
+      },
+      {
+        "name": "model_code",
+        "type": "varchar(50)",
+        "nullable": "NO",
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "comment": "型号编码",
+        "type_chinese": "字符串",
+        "name_chinese": "型号编码"
+      },
+      {
+        "name": "description",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "描述",
+        "type_chinese": "文本",
+        "name_chinese": "描述"
+      },
+      {
+        "name": "specifications",
+        "type": "json",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "规格参数",
+        "type_chinese": "JSON数据",
+        "name_chinese": "规格参数"
+      },
+      {
+        "name": "is_active",
+        "type": "tinyint(3)",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "是否激活",
+        "type_chinese": "小整数",
+        "name_chinese": "是否激活"
+      },
+      {
+        "name": "created_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "创建时间"
+      },
+      {
+        "name": "updated_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "更新时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "更新时间"
+      },
+      {
+        "name": "deleted_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "删除时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "删除时间"
+      },
+      {
+        "name": "category_uuid",
+        "type": "char(36)",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "分类UUID",
+        "type_chinese": "字符",
+        "name_chinese": "分类UUID"
+      }
+    ]
+  },
+  "products": {
+    "comment": "产品表",
+    "comment_chinese": "产品表",
+    "record_count": 11,
+    "columns": [
+      {
+        "name": "uuid",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": "uuid()",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "唯一标识符",
+        "type_chinese": "字符",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "product_name",
+        "type": "varchar(100)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "产品名称",
+        "type_chinese": "字符串",
+        "name_chinese": "产品名称"
+      },
+      {
+        "name": "product_code",
+        "type": "varchar(50)",
+        "nullable": "NO",
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "comment": "产品编码",
+        "type_chinese": "字符串",
+        "name_chinese": "产品编码"
+      },
+      {
+        "name": "description",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "描述",
+        "type_chinese": "文本",
+        "name_chinese": "描述"
+      },
+      {
+        "name": "unit_price",
+        "type": "decimal(10,2)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": "0.00",
+        "extra": "",
+        "comment": "单价",
+        "type_chinese": "小数",
+        "name_chinese": "单价"
+      },
+      {
+        "name": "current_quantity",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": "0",
+        "extra": "",
+        "comment": "当前库存数量",
+        "type_chinese": "整数",
+        "name_chinese": "当前库存数量"
+      },
+      {
+        "name": "min_quantity",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "comment": "最低库存数量",
+        "type_chinese": "整数",
+        "name_chinese": "最低库存数量"
+      },
+      {
+        "name": "max_quantity",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "comment": "最高库存数量",
+        "type_chinese": "整数",
+        "name_chinese": "最高库存数量"
+      },
+      {
+        "name": "supplier_uuid",
+        "type": "char(36)",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "SUPPLIERUUID",
+        "type_chinese": "字符",
+        "name_chinese": "SUPPLIERUUID"
+      },
+      {
+        "name": "is_active",
+        "type": "tinyint(3)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": "1",
+        "extra": "",
+        "comment": "是否激活",
+        "type_chinese": "小整数",
+        "name_chinese": "是否激活"
+      },
+      {
+        "name": "created_at",
+        "type": "timestamp",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "时间戳",
+        "name_chinese": "创建时间"
+      },
+      {
+        "name": "updated_at",
+        "type": "timestamp",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+        "comment": "更新时间",
+        "type_chinese": "时间戳",
+        "name_chinese": "更新时间"
+      },
+      {
+        "name": "deleted_at",
+        "type": "timestamp",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "删除时间",
+        "type_chinese": "时间戳",
+        "name_chinese": "删除时间"
+      },
+      {
+        "name": "category_name",
+        "type": "varchar(50)",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "分类名称",
+        "type_chinese": "字符串",
+        "name_chinese": "分类名称"
+      },
+      {
+        "name": "model_uuid",
+        "type": "char(36)",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "型号UUID",
+        "type_chinese": "字符",
+        "name_chinese": "型号UUID"
+      },
+      {
+        "name": "category_uuid",
+        "type": "char(36)",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "分类UUID",
+        "type_chinese": "字符",
+        "name_chinese": "分类UUID"
+      }
+    ]
+  },
+  "purchase_order_items": {
+    "comment": "采购订单明细表",
+    "comment_chinese": "采购订单明细表",
+    "record_count": 1,
+    "columns": [
+      {
+        "name": "uuid",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": "uuid()",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "唯一标识符",
+        "type_chinese": "字符",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "purchase_order_uuid",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "PURCHASE_ORDERUUID",
+        "type_chinese": "字符",
+        "name_chinese": "PURCHASE_ORDERUUID"
+      },
+      {
+        "name": "product_uuid",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "产品UUID",
+        "type_chinese": "字符",
+        "name_chinese": "产品UUID"
+      },
+      {
+        "name": "quantity",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "数量",
+        "type_chinese": "整数",
+        "name_chinese": "数量"
+      },
+      {
+        "name": "unit_price",
+        "type": "decimal(10,2)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "单价",
+        "type_chinese": "小数",
+        "name_chinese": "单价"
+      },
+      {
+        "name": "total_price",
+        "type": "decimal(10,2)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "总价",
+        "type_chinese": "小数",
+        "name_chinese": "总价"
+      },
+      {
+        "name": "received_quantity",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "comment": "received_quantity",
+        "type_chinese": "整数",
+        "name_chinese": "received_quantity"
+      },
+      {
+        "name": "remark",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "备注",
+        "type_chinese": "文本",
+        "name_chinese": "备注"
+      },
+      {
+        "name": "created_at",
+        "type": "timestamp",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "时间戳",
+        "name_chinese": "创建时间"
+      },
+      {
+        "name": "model_uuid",
+        "type": "char(36)",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "型号UUID",
+        "type_chinese": "字符",
+        "name_chinese": "型号UUID"
+      },
+      {
+        "name": "selected_specification",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "选择的规格参数",
+        "type_chinese": "文本",
+        "name_chinese": "selected_specification"
+      },
+      {
+        "name": "is_active",
+        "type": "tinyint(3)",
+        "nullable": "NO",
+        "key": "",
+        "default": "1",
+        "extra": "",
+        "comment": "软删除标记，TRUE表示有效，FALSE表示已删除",
+        "type_chinese": "小整数",
+        "name_chinese": "是否激活"
+      }
+    ]
+  },
+  "purchase_orders": {
+    "comment": "采购订单表",
+    "comment_chinese": "采购订单表",
+    "record_count": 1,
+    "columns": [
+      {
+        "name": "uuid",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": "uuid()",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "唯一标识符",
+        "type_chinese": "字符",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "order_number",
+        "type": "varchar(50)",
+        "nullable": "NO",
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "comment": "订单号",
+        "type_chinese": "字符串",
+        "name_chinese": "订单号"
+      },
+      {
+        "name": "supplier_uuid",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "SUPPLIERUUID",
+        "type_chinese": "字符",
+        "name_chinese": "SUPPLIERUUID"
+      },
+      {
+        "name": "total_amount",
+        "type": "decimal(10,2)",
+        "nullable": "NO",
+        "key": "",
+        "default": "0.00",
+        "extra": "",
+        "comment": "总金额",
+        "type_chinese": "小数",
+        "name_chinese": "总金额"
+      },
+      {
+        "name": "status",
+        "type": "enum",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": "PENDING",
+        "extra": "",
+        "comment": "状态",
+        "type_chinese": "枚举",
+        "name_chinese": "状态"
+      },
+      {
+        "name": "order_date",
+        "type": "date",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "订单日期",
+        "type_chinese": "日期",
+        "name_chinese": "订单日期"
+      },
+      {
+        "name": "expected_delivery_date",
+        "type": "date",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "expected_delivery_date",
+        "type_chinese": "日期",
+        "name_chinese": "expected_delivery_date"
+      },
+      {
+        "name": "actual_delivery_date",
+        "type": "date",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "actual_delivery_date",
+        "type_chinese": "日期",
+        "name_chinese": "actual_delivery_date"
+      },
+      {
+        "name": "remark",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "备注",
+        "type_chinese": "文本",
+        "name_chinese": "备注"
+      },
+      {
+        "name": "created_by",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "创建者",
+        "type_chinese": "字符",
+        "name_chinese": "创建者"
+      },
+      {
+        "name": "created_at",
+        "type": "timestamp",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "时间戳",
+        "name_chinese": "创建时间"
+      },
+      {
+        "name": "updated_at",
+        "type": "timestamp",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+        "comment": "更新时间",
+        "type_chinese": "时间戳",
+        "name_chinese": "更新时间"
+      },
+      {
+        "name": "is_active",
+        "type": "tinyint(3)",
+        "nullable": "NO",
+        "key": "",
+        "default": "1",
+        "extra": "",
+        "comment": "软删除标记，TRUE表示有效，FALSE表示已删除",
+        "type_chinese": "小整数",
+        "name_chinese": "是否激活"
+      }
+    ]
+  },
+  "sales_order_items": {
+    "comment": "销售订单明细表",
+    "comment_chinese": "销售订单明细表",
+    "record_count": 6,
+    "columns": [
+      {
+        "name": "uuid",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": "uuid()",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "唯一标识符",
+        "type_chinese": "字符",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "sales_order_uuid",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "SALES_ORDERUUID",
+        "type_chinese": "字符",
+        "name_chinese": "SALES_ORDERUUID"
+      },
+      {
+        "name": "product_uuid",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "产品UUID",
+        "type_chinese": "字符",
+        "name_chinese": "产品UUID"
+      },
+      {
+        "name": "quantity",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "数量",
+        "type_chinese": "整数",
+        "name_chinese": "数量"
+      },
+      {
+        "name": "unit_price",
+        "type": "decimal(10,2)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "单价",
+        "type_chinese": "小数",
+        "name_chinese": "单价"
+      },
+      {
+        "name": "total_price",
+        "type": "decimal(10,2)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "总价",
+        "type_chinese": "小数",
+        "name_chinese": "总价"
+      },
+      {
+        "name": "shipped_quantity",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "comment": "shipped_quantity",
+        "type_chinese": "整数",
+        "name_chinese": "shipped_quantity"
+      },
+      {
+        "name": "remark",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "备注",
+        "type_chinese": "文本",
+        "name_chinese": "备注"
+      },
+      {
+        "name": "created_at",
+        "type": "timestamp",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "时间戳",
+        "name_chinese": "创建时间"
+      }
+    ]
+  },
+  "sales_orders": {
+    "comment": "销售订单表",
+    "comment_chinese": "销售订单表",
+    "record_count": 3,
+    "columns": [
+      {
+        "name": "uuid",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": "uuid()",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "唯一标识符",
+        "type_chinese": "字符",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "order_number",
+        "type": "varchar(50)",
+        "nullable": "NO",
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "comment": "订单号",
+        "type_chinese": "字符串",
+        "name_chinese": "订单号"
+      },
+      {
+        "name": "customer_uuid",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "CUSTOMERUUID",
+        "type_chinese": "字符",
+        "name_chinese": "CUSTOMERUUID"
+      },
+      {
+        "name": "customer_name",
+        "type": "varchar(100)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "客户名称",
+        "type_chinese": "字符串",
+        "name_chinese": "客户名称"
+      },
+      {
+        "name": "customer_phone",
+        "type": "varchar(20)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "customer_phone",
+        "type_chinese": "字符串",
+        "name_chinese": "customer_phone"
+      },
+      {
+        "name": "customer_address",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "customer_address",
+        "type_chinese": "文本",
+        "name_chinese": "customer_address"
+      },
+      {
+        "name": "total_amount",
+        "type": "decimal(10,2)",
+        "nullable": "NO",
+        "key": "",
+        "default": "0.00",
+        "extra": "",
+        "comment": "总金额",
+        "type_chinese": "小数",
+        "name_chinese": "总金额"
+      },
+      {
+        "name": "status",
+        "type": "enum",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": "PENDING",
+        "extra": "",
+        "comment": "状态",
+        "type_chinese": "枚举",
+        "name_chinese": "状态"
+      },
+      {
+        "name": "order_date",
+        "type": "date",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "订单日期",
+        "type_chinese": "日期",
+        "name_chinese": "订单日期"
+      },
+      {
+        "name": "expected_delivery_date",
+        "type": "date",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "expected_delivery_date",
+        "type_chinese": "日期",
+        "name_chinese": "expected_delivery_date"
+      },
+      {
+        "name": "actual_delivery_date",
+        "type": "date",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "actual_delivery_date",
+        "type_chinese": "日期",
+        "name_chinese": "actual_delivery_date"
+      },
+      {
+        "name": "remark",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "备注",
+        "type_chinese": "文本",
+        "name_chinese": "备注"
+      },
+      {
+        "name": "created_by",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "创建者",
+        "type_chinese": "字符",
+        "name_chinese": "创建者"
+      },
+      {
+        "name": "created_at",
+        "type": "timestamp",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "时间戳",
+        "name_chinese": "创建时间"
+      },
+      {
+        "name": "updated_at",
+        "type": "timestamp",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+        "comment": "更新时间",
+        "type_chinese": "时间戳",
+        "name_chinese": "更新时间"
+      }
+    ]
+  },
+  "sqlbot_chat": {
+    "comment": "sqlbot_chat",
+    "comment_chinese": "sqlbot_chat",
+    "record_count": 1,
+    "columns": [
+      {
+        "name": "id",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "comment": "ID",
+        "type_chinese": "整数",
+        "name_chinese": "ID"
+      },
+      {
+        "name": "uuid",
+        "type": "varchar(36)",
+        "nullable": "NO",
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "comment": "唯一标识符",
+        "type_chinese": "字符串",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "session_id",
+        "type": "varchar(100)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "会话ID",
+        "type_chinese": "字符串",
+        "name_chinese": "会话ID"
+      },
+      {
+        "name": "user_id",
+        "type": "varchar(36)",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "用户ID",
+        "type_chinese": "字符串",
+        "name_chinese": "USERID"
+      },
+      {
+        "name": "title",
+        "type": "varchar(200)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "会话标题",
+        "type_chinese": "字符串",
+        "name_chinese": "title"
+      },
+      {
+        "name": "datasource",
+        "type": "varchar(36)",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "数据源ID",
+        "type_chinese": "字符串",
+        "name_chinese": "datasource"
+      },
+      {
+        "name": "session_metadata",
+        "type": "json",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "会话元数据",
+        "type_chinese": "JSON数据",
+        "name_chinese": "session_metadata"
+      },
+      {
+        "name": "is_active",
+        "type": "tinyint(3)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "是否活跃",
+        "type_chinese": "小整数",
+        "name_chinese": "是否激活"
+      },
+      {
+        "name": "created_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "创建时间"
+      },
+      {
+        "name": "updated_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "更新时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "更新时间"
+      }
+    ]
+  },
+  "sqlbot_chat_question": {
+    "comment": "sqlbot_chat_question",
+    "comment_chinese": "sqlbot_chat_question",
+    "record_count": 0,
+    "columns": [
+      {
+        "name": "id",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "comment": "ID",
+        "type_chinese": "整数",
+        "name_chinese": "ID"
+      },
+      {
+        "name": "uuid",
+        "type": "varchar(36)",
+        "nullable": "NO",
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "comment": "唯一标识符",
+        "type_chinese": "字符串",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "question",
+        "type": "text",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "问题内容",
+        "type_chinese": "文本",
+        "name_chinese": "question"
+      },
+      {
+        "name": "datasource",
+        "type": "varchar(36)",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "数据源ID",
+        "type_chinese": "字符串",
+        "name_chinese": "datasource"
+      },
+      {
+        "name": "question_type",
+        "type": "varchar(50)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "问题类型",
+        "type_chinese": "字符串",
+        "name_chinese": "question_type"
+      },
+      {
+        "name": "difficulty_level",
+        "type": "varchar(20)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "难度级别",
+        "type_chinese": "字符串",
+        "name_chinese": "difficulty_level"
+      },
+      {
+        "name": "tags",
+        "type": "json",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "标签列表",
+        "type_chinese": "JSON数据",
+        "name_chinese": "标签"
+      },
+      {
+        "name": "is_active",
+        "type": "tinyint(3)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "是否激活",
+        "type_chinese": "小整数",
+        "name_chinese": "是否激活"
+      },
+      {
+        "name": "created_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "创建时间"
+      },
+      {
+        "name": "updated_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "更新时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "更新时间"
+      }
+    ]
+  },
+  "sqlbot_chat_record": {
+    "comment": "sqlbot_chat_record",
+    "comment_chinese": "sqlbot_chat_record",
+    "record_count": 0,
+    "columns": [
+      {
+        "name": "id",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "comment": "ID",
+        "type_chinese": "整数",
+        "name_chinese": "ID"
+      },
+      {
+        "name": "uuid",
+        "type": "varchar(36)",
+        "nullable": "NO",
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "comment": "唯一标识符",
+        "type_chinese": "字符串",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "chat_id",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "聊天会话ID",
+        "type_chinese": "整数",
+        "name_chinese": "CHATID"
+      },
+      {
+        "name": "question",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "问题",
+        "type_chinese": "文本",
+        "name_chinese": "question"
+      },
+      {
+        "name": "answer",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "回答",
+        "type_chinese": "文本",
+        "name_chinese": "answer"
+      },
+      {
+        "name": "sql_query",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "SQL查询语句",
+        "type_chinese": "文本",
+        "name_chinese": "sql_query"
+      },
+      {
+        "name": "datasource",
+        "type": "varchar(36)",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "数据源ID",
+        "type_chinese": "字符串",
+        "name_chinese": "datasource"
+      },
+      {
+        "name": "execution_time",
+        "type": "int(10)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "执行时间(毫秒)",
+        "type_chinese": "整数",
+        "name_chinese": "执行时间"
+      },
+      {
+        "name": "is_success",
+        "type": "tinyint(3)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "是否成功",
+        "type_chinese": "小整数",
+        "name_chinese": "是否success"
+      },
+      {
+        "name": "error_message",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "错误信息",
+        "type_chinese": "文本",
+        "name_chinese": "错误信息"
+      },
+      {
+        "name": "record_metadata",
+        "type": "json",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "记录元数据",
+        "type_chinese": "JSON数据",
+        "name_chinese": "record_metadata"
+      },
+      {
+        "name": "create_time",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "create_time"
+      }
+    ]
+  },
+  "sqlbot_data_source": {
+    "comment": "sqlbot_data_source",
+    "comment_chinese": "sqlbot_data_source",
+    "record_count": 0,
+    "columns": [
+      {
+        "name": "id",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "comment": "ID",
+        "type_chinese": "整数",
+        "name_chinese": "ID"
+      },
+      {
+        "name": "uuid",
+        "type": "varchar(36)",
+        "nullable": "NO",
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "comment": "唯一标识符",
+        "type_chinese": "字符串",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "name",
+        "type": "varchar(100)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "数据源名称",
+        "type_chinese": "字符串",
+        "name_chinese": "名称"
+      },
+      {
+        "name": "type",
+        "type": "varchar(50)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "数据源类型",
+        "type_chinese": "字符串",
+        "name_chinese": "类型"
+      },
+      {
+        "name": "description",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "数据源描述",
+        "type_chinese": "文本",
+        "name_chinese": "描述"
+      },
+      {
+        "name": "connection_config",
+        "type": "json",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "连接配置",
+        "type_chinese": "JSON数据",
+        "name_chinese": "connection_config"
+      },
+      {
+        "name": "schema_info",
+        "type": "json",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "数据模式信息",
+        "type_chinese": "JSON数据",
+        "name_chinese": "schema_info"
+      },
+      {
+        "name": "is_active",
+        "type": "tinyint(3)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "是否激活",
+        "type_chinese": "小整数",
+        "name_chinese": "是否激活"
+      },
+      {
+        "name": "created_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "创建时间"
+      },
+      {
+        "name": "updated_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "更新时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "更新时间"
+      }
+    ]
+  },
+  "sqlbot_query_template": {
+    "comment": "sqlbot_query_template",
+    "comment_chinese": "sqlbot_query_template",
+    "record_count": 0,
+    "columns": [
+      {
+        "name": "id",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "comment": "ID",
+        "type_chinese": "整数",
+        "name_chinese": "ID"
+      },
+      {
+        "name": "uuid",
+        "type": "varchar(36)",
+        "nullable": "NO",
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "comment": "唯一标识符",
+        "type_chinese": "字符串",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "name",
+        "type": "varchar(100)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "模板名称",
+        "type_chinese": "字符串",
+        "name_chinese": "名称"
+      },
+      {
+        "name": "description",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "模板描述",
+        "type_chinese": "文本",
+        "name_chinese": "描述"
+      },
+      {
+        "name": "template_sql",
+        "type": "text",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "模板SQL",
+        "type_chinese": "文本",
+        "name_chinese": "template_sql"
+      },
+      {
+        "name": "datasource",
+        "type": "varchar(36)",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "数据源ID",
+        "type_chinese": "字符串",
+        "name_chinese": "datasource"
+      },
+      {
+        "name": "parameters",
+        "type": "json",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "参数定义",
+        "type_chinese": "JSON数据",
+        "name_chinese": "parameters"
+      },
+      {
+        "name": "is_active",
+        "type": "tinyint(3)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "是否激活",
+        "type_chinese": "小整数",
+        "name_chinese": "是否激活"
+      },
+      {
+        "name": "created_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "创建时间"
+      },
+      {
+        "name": "updated_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "更新时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "更新时间"
+      }
+    ]
+  },
+  "sqlbot_recommendation": {
+    "comment": "sqlbot_recommendation",
+    "comment_chinese": "sqlbot_recommendation",
+    "record_count": 0,
+    "columns": [
+      {
+        "name": "id",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "comment": "ID",
+        "type_chinese": "整数",
+        "name_chinese": "ID"
+      },
+      {
+        "name": "uuid",
+        "type": "varchar(36)",
+        "nullable": "NO",
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "comment": "唯一标识符",
+        "type_chinese": "字符串",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "question",
+        "type": "text",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "推荐问题",
+        "type_chinese": "文本",
+        "name_chinese": "question"
+      },
+      {
+        "name": "datasource",
+        "type": "varchar(36)",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "数据源ID",
+        "type_chinese": "字符串",
+        "name_chinese": "datasource"
+      },
+      {
+        "name": "category",
+        "type": "varchar(50)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "问题分类",
+        "type_chinese": "字符串",
+        "name_chinese": "category"
+      },
+      {
+        "name": "priority",
+        "type": "int(10)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "优先级",
+        "type_chinese": "整数",
+        "name_chinese": "优先级"
+      },
+      {
+        "name": "is_active",
+        "type": "tinyint(3)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "是否激活",
+        "type_chinese": "小整数",
+        "name_chinese": "是否激活"
+      },
+      {
+        "name": "created_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "创建时间"
+      },
+      {
+        "name": "updated_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "更新时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "更新时间"
+      }
+    ]
+  },
+  "suppliers": {
+    "comment": "供应商表",
+    "comment_chinese": "供应商表",
+    "record_count": 9,
+    "columns": [
+      {
+        "name": "uuid",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": "uuid()",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "唯一标识符",
+        "type_chinese": "字符",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "supplier_name",
+        "type": "varchar(100)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "供应商名称",
+        "type_chinese": "字符串",
+        "name_chinese": "供应商名称"
+      },
+      {
+        "name": "supplier_code",
+        "type": "varchar(50)",
+        "nullable": "NO",
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "comment": "供应商编码",
+        "type_chinese": "字符串",
+        "name_chinese": "供应商编码"
+      },
+      {
+        "name": "contact_person",
+        "type": "varchar(50)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "联系人",
+        "type_chinese": "字符串",
+        "name_chinese": "联系人"
+      },
+      {
+        "name": "phone",
+        "type": "varchar(20)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "电话",
+        "type_chinese": "字符串",
+        "name_chinese": "电话"
+      },
+      {
+        "name": "email",
+        "type": "varchar(100)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "邮箱",
+        "type_chinese": "字符串",
+        "name_chinese": "邮箱"
+      },
+      {
+        "name": "address",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "地址",
+        "type_chinese": "文本",
+        "name_chinese": "地址"
+      },
+      {
+        "name": "is_active",
+        "type": "tinyint(3)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": "1",
+        "extra": "",
+        "comment": "是否激活",
+        "type_chinese": "小整数",
+        "name_chinese": "是否激活"
+      },
+      {
+        "name": "created_at",
+        "type": "timestamp",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "时间戳",
+        "name_chinese": "创建时间"
+      },
+      {
+        "name": "updated_at",
+        "type": "timestamp",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+        "comment": "更新时间",
+        "type_chinese": "时间戳",
+        "name_chinese": "更新时间"
+      },
+      {
+        "name": "deleted_at",
+        "type": "timestamp",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "删除时间",
+        "type_chinese": "时间戳",
+        "name_chinese": "删除时间"
+      }
+    ]
+  },
+  "sys_assistant": {
+    "comment": "sys_assistant",
+    "comment_chinese": "sys_assistant",
+    "record_count": 1,
+    "columns": [
+      {
+        "name": "id",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "comment": "ID",
+        "type_chinese": "整数",
+        "name_chinese": "ID"
+      },
+      {
+        "name": "uuid",
+        "type": "varchar(36)",
+        "nullable": "NO",
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "comment": "唯一标识符",
+        "type_chinese": "字符串",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "workspace_uuid",
+        "type": "varchar(36)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": "default",
+        "extra": "",
+        "comment": "工作空间UUID",
+        "type_chinese": "字符串",
+        "name_chinese": "WORKSPACEUUID"
+      },
+      {
+        "name": "name",
+        "type": "varchar(100)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "助手名称",
+        "type_chinese": "字符串",
+        "name_chinese": "名称"
+      },
+      {
+        "name": "description",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "助手描述",
+        "type_chinese": "文本",
+        "name_chinese": "描述"
+      },
+      {
+        "name": "model_type",
+        "type": "varchar(50)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "模型类型",
+        "type_chinese": "字符串",
+        "name_chinese": "model_type"
+      },
+      {
+        "name": "model_config",
+        "type": "json",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "模型配置",
+        "type_chinese": "JSON数据",
+        "name_chinese": "model_config"
+      },
+      {
+        "name": "capabilities",
+        "type": "json",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "功能列表",
+        "type_chinese": "JSON数据",
+        "name_chinese": "capabilities"
+      },
+      {
+        "name": "is_active",
+        "type": "tinyint(3)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "是否激活",
+        "type_chinese": "小整数",
+        "name_chinese": "是否激活"
+      },
+      {
+        "name": "created_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "创建时间"
+      },
+      {
+        "name": "updated_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "更新时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "更新时间"
+      }
+    ]
+  },
+  "sys_chat_message": {
+    "comment": "sys_chat_message",
+    "comment_chinese": "sys_chat_message",
+    "record_count": 908,
+    "columns": [
+      {
+        "name": "id",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "comment": "ID",
+        "type_chinese": "整数",
+        "name_chinese": "ID"
+      },
+      {
+        "name": "uuid",
+        "type": "varchar(36)",
+        "nullable": "NO",
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "comment": "唯一标识符",
+        "type_chinese": "字符串",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "session_uuid",
+        "type": "varchar(36)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "会话UUID",
+        "type_chinese": "字符串",
+        "name_chinese": "SESSIONUUID"
+      },
+      {
+        "name": "role",
+        "type": "varchar(20)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "消息角色(user/assistant)",
+        "type_chinese": "字符串",
+        "name_chinese": "角色"
+      },
+      {
+        "name": "content",
+        "type": "text",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "消息内容",
+        "type_chinese": "文本",
+        "name_chinese": "content"
+      },
+      {
+        "name": "message_metadata",
+        "type": "json",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "消息元数据",
+        "type_chinese": "JSON数据",
+        "name_chinese": "message_metadata"
+      },
+      {
+        "name": "is_processed",
+        "type": "tinyint(3)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "是否已处理",
+        "type_chinese": "小整数",
+        "name_chinese": "是否是否已处理"
+      },
+      {
+        "name": "created_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "创建时间"
+      }
+    ]
+  },
+  "sys_chat_session": {
+    "comment": "sys_chat_session",
+    "comment_chinese": "sys_chat_session",
+    "record_count": 5,
+    "columns": [
+      {
+        "name": "id",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "comment": "ID",
+        "type_chinese": "整数",
+        "name_chinese": "ID"
+      },
+      {
+        "name": "uuid",
+        "type": "varchar(36)",
+        "nullable": "NO",
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "comment": "唯一标识符",
+        "type_chinese": "字符串",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "session_id",
+        "type": "varchar(100)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "会话ID",
+        "type_chinese": "字符串",
+        "name_chinese": "会话ID"
+      },
+      {
+        "name": "user_id",
+        "type": "varchar(36)",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "用户ID",
+        "type_chinese": "字符串",
+        "name_chinese": "USERID"
+      },
+      {
+        "name": "title",
+        "type": "varchar(200)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "会话标题",
+        "type_chinese": "字符串",
+        "name_chinese": "title"
+      },
+      {
+        "name": "assistant_uuid",
+        "type": "varchar(36)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "助手UUID",
+        "type_chinese": "字符串",
+        "name_chinese": "ASSISTANTUUID"
+      },
+      {
+        "name": "session_metadata",
+        "type": "json",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "会话元数据",
+        "type_chinese": "JSON数据",
+        "name_chinese": "session_metadata"
+      },
+      {
+        "name": "is_active",
+        "type": "tinyint(3)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "是否活跃",
+        "type_chinese": "小整数",
+        "name_chinese": "是否激活"
+      },
+      {
+        "name": "created_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "MUL",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "创建时间"
+      },
+      {
+        "name": "updated_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "更新时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "更新时间"
+      }
+    ]
+  },
+  "sys_data_source": {
+    "comment": "sys_data_source",
+    "comment_chinese": "sys_data_source",
+    "record_count": 1,
+    "columns": [
+      {
+        "name": "id",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "comment": "ID",
+        "type_chinese": "整数",
+        "name_chinese": "ID"
+      },
+      {
+        "name": "uuid",
+        "type": "varchar(36)",
+        "nullable": "NO",
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "comment": "唯一标识符",
+        "type_chinese": "字符串",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "workspace_uuid",
+        "type": "varchar(36)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": "default",
+        "extra": "",
+        "comment": "工作空间UUID",
+        "type_chinese": "字符串",
+        "name_chinese": "WORKSPACEUUID"
+      },
+      {
+        "name": "name",
+        "type": "varchar(100)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "数据源名称",
+        "type_chinese": "字符串",
+        "name_chinese": "名称"
+      },
+      {
+        "name": "type",
+        "type": "varchar(50)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "数据源类型",
+        "type_chinese": "字符串",
+        "name_chinese": "类型"
+      },
+      {
+        "name": "description",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "数据源描述",
+        "type_chinese": "文本",
+        "name_chinese": "描述"
+      },
+      {
+        "name": "connection_config",
+        "type": "json",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "连接配置",
+        "type_chinese": "JSON数据",
+        "name_chinese": "connection_config"
+      },
+      {
+        "name": "schema_info",
+        "type": "json",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "数据模式信息",
+        "type_chinese": "JSON数据",
+        "name_chinese": "schema_info"
+      },
+      {
+        "name": "is_active",
+        "type": "tinyint(3)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "是否激活",
+        "type_chinese": "小整数",
+        "name_chinese": "是否激活"
+      },
+      {
+        "name": "created_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "创建时间"
+      },
+      {
+        "name": "updated_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "更新时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "更新时间"
+      }
+    ]
+  },
+  "sys_file_upload": {
+    "comment": "sys_file_upload",
+    "comment_chinese": "sys_file_upload",
+    "record_count": 0,
+    "columns": [
+      {
+        "name": "id",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "comment": "ID",
+        "type_chinese": "整数",
+        "name_chinese": "ID"
+      },
+      {
+        "name": "uuid",
+        "type": "varchar(36)",
+        "nullable": "NO",
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "comment": "唯一标识符",
+        "type_chinese": "字符串",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "filename",
+        "type": "varchar(255)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "文件名",
+        "type_chinese": "字符串",
+        "name_chinese": "filename"
+      },
+      {
+        "name": "file_type",
+        "type": "varchar(50)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "文件类型",
+        "type_chinese": "字符串",
+        "name_chinese": "file_type"
+      },
+      {
+        "name": "file_size",
+        "type": "int(10)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "文件大小(字节)",
+        "type_chinese": "整数",
+        "name_chinese": "file_size"
+      },
+      {
+        "name": "storage_path",
+        "type": "varchar(500)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "存储路径",
+        "type_chinese": "字符串",
+        "name_chinese": "storage_path"
+      },
+      {
+        "name": "file_metadata",
+        "type": "json",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "文件元数据",
+        "type_chinese": "JSON数据",
+        "name_chinese": "file_metadata"
+      },
+      {
+        "name": "is_processed",
+        "type": "tinyint(3)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "是否已处理",
+        "type_chinese": "小整数",
+        "name_chinese": "是否是否已处理"
+      },
+      {
+        "name": "created_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "创建时间"
+      }
+    ]
+  },
+  "sys_query_history": {
+    "comment": "sys_query_history",
+    "comment_chinese": "sys_query_history",
+    "record_count": 0,
+    "columns": [
+      {
+        "name": "id",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "comment": "ID",
+        "type_chinese": "整数",
+        "name_chinese": "ID"
+      },
+      {
+        "name": "uuid",
+        "type": "varchar(36)",
+        "nullable": "NO",
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "comment": "唯一标识符",
+        "type_chinese": "字符串",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "session_uuid",
+        "type": "varchar(36)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "会话UUID",
+        "type_chinese": "字符串",
+        "name_chinese": "SESSIONUUID"
+      },
+      {
+        "name": "query_text",
+        "type": "text",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "查询文本",
+        "type_chinese": "文本",
+        "name_chinese": "查询文本"
+      },
+      {
+        "name": "data_source_uuid",
+        "type": "varchar(36)",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "comment": "数据源UUID",
+        "type_chinese": "字符串",
+        "name_chinese": "DATA_SOURCEUUID"
+      },
+      {
+        "name": "result_data",
+        "type": "json",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "查询结果数据",
+        "type_chinese": "JSON数据",
+        "name_chinese": "result_data"
+      },
+      {
+        "name": "execution_time",
+        "type": "int(10)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "执行时间(毫秒)",
+        "type_chinese": "整数",
+        "name_chinese": "执行时间"
+      },
+      {
+        "name": "is_success",
+        "type": "tinyint(3)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "是否成功",
+        "type_chinese": "小整数",
+        "name_chinese": "是否success"
+      },
+      {
+        "name": "error_message",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "错误信息",
+        "type_chinese": "文本",
+        "name_chinese": "错误信息"
+      },
+      {
+        "name": "created_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "创建时间"
+      }
+    ]
+  },
+  "sys_workspace": {
+    "comment": "sys_workspace",
+    "comment_chinese": "sys_workspace",
+    "record_count": 1,
+    "columns": [
+      {
+        "name": "id",
+        "type": "int(10)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "comment": "ID",
+        "type_chinese": "整数",
+        "name_chinese": "ID"
+      },
+      {
+        "name": "uuid",
+        "type": "varchar(36)",
+        "nullable": "NO",
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "comment": "唯一标识符",
+        "type_chinese": "字符串",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "name",
+        "type": "varchar(100)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "工作空间名称",
+        "type_chinese": "字符串",
+        "name_chinese": "名称"
+      },
+      {
+        "name": "description",
+        "type": "text",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "工作空间描述",
+        "type_chinese": "文本",
+        "name_chinese": "描述"
+      },
+      {
+        "name": "settings",
+        "type": "json",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "工作空间设置",
+        "type_chinese": "JSON数据",
+        "name_chinese": "设置"
+      },
+      {
+        "name": "is_active",
+        "type": "tinyint(3)",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "是否激活",
+        "type_chinese": "小整数",
+        "name_chinese": "是否激活"
+      },
+      {
+        "name": "created_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "创建时间"
+      },
+      {
+        "name": "updated_at",
+        "type": "datetime",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "更新时间",
+        "type_chinese": "日期时间",
+        "name_chinese": "更新时间"
+      }
+    ]
+  },
+  "users": {
+    "comment": "用户表",
+    "comment_chinese": "用户表",
+    "record_count": 5,
+    "columns": [
+      {
+        "name": "uuid",
+        "type": "char(36)",
+        "nullable": "NO",
+        "key": "PRI",
+        "default": "uuid()",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "唯一标识符",
+        "type_chinese": "字符",
+        "name_chinese": "唯一标识符"
+      },
+      {
+        "name": "username",
+        "type": "varchar(50)",
+        "nullable": "NO",
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "comment": "用户名",
+        "type_chinese": "字符串",
+        "name_chinese": "用户名"
+      },
+      {
+        "name": "email",
+        "type": "varchar(100)",
+        "nullable": "NO",
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "comment": "邮箱",
+        "type_chinese": "字符串",
+        "name_chinese": "邮箱"
+      },
+      {
+        "name": "password_hash",
+        "type": "varchar(255)",
+        "nullable": "NO",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "password_hash",
+        "type_chinese": "字符串",
+        "name_chinese": "password_hash"
+      },
+      {
+        "name": "full_name",
+        "type": "varchar(100)",
+        "nullable": "NO",
+        "key": "",
+        "default": "未命名用户",
+        "extra": "",
+        "comment": "全名",
+        "type_chinese": "字符串",
+        "name_chinese": "全名"
+      },
+      {
+        "name": "role",
+        "type": "enum",
+        "nullable": "NO",
+        "key": "MUL",
+        "default": "user",
+        "extra": "",
+        "comment": "角色",
+        "type_chinese": "枚举",
+        "name_chinese": "角色"
+      },
+      {
+        "name": "is_superuser",
+        "type": "tinyint(3)",
+        "nullable": "YES",
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "comment": "是否superuser",
+        "type_chinese": "小整数",
+        "name_chinese": "是否superuser"
+      },
+      {
+        "name": "is_active",
+        "type": "tinyint(3)",
+        "nullable": "NO",
+        "key": "",
+        "default": "1",
+        "extra": "",
+        "comment": "是否激活",
+        "type_chinese": "小整数",
+        "name_chinese": "是否激活"
+      },
+      {
+        "name": "last_login",
+        "type": "timestamp",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "最后登录",
+        "type_chinese": "时间戳",
+        "name_chinese": "最后登录"
+      },
+      {
+        "name": "created_at",
+        "type": "timestamp",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "comment": "创建时间",
+        "type_chinese": "时间戳",
+        "name_chinese": "创建时间"
+      },
+      {
+        "name": "updated_at",
+        "type": "timestamp",
+        "nullable": "YES",
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+        "comment": "更新时间",
+        "type_chinese": "时间戳",
+        "name_chinese": "更新时间"
+      },
+      {
+        "name": "deleted_at",
+        "type": "timestamp",
+        "nullable": "YES",
+        "key": "",
+        "default": null,
+        "extra": "",
+        "comment": "删除时间",
+        "type_chinese": "时间戳",
+        "name_chinese": "删除时间"
+      }
+    ]
+  }
+}
